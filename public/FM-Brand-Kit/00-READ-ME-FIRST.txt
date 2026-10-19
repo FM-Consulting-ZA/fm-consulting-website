@@ -1,0 +1,130 @@
+FM CONSULTING — BRAND KIT v1.0
+==============================
+Ink and paper. Archivo and IBM Plex Mono. One stroke unit governs everything.
+
+Full guidelines:  https://claude.ai/code/artifact/f1367a3d-ad1b-4078-ac94-10d270338418
+Mark construction: https://claude.ai/code/artifact/7cee10cf-278f-4f26-9d36-14a0c54e4a32
+
+
+DO THIS FIRST
+-------------
+1. Install the fonts in 02-Fonts (select all .ttf → right-click → Install).
+   Without them the .pptx will substitute and the layouts will shift.
+
+2. Replace the placeholders. Open 07-Source/brand.py and edit the ENTITY block
+   at the top — phone, street, area, web, reg, vat. Then run:
+
+       python3 stationery.py && python3 documents.py && node deck.js
+
+   Every PDF and the deck regenerate with your real details. Nothing else
+   needs touching. (Requires python3 with fonttools, playwright and cairosvg,
+   and node with pptxgenjs.)
+
+   If you would rather not run anything: the placeholders are 00 Street Name,
+   Suburb Cape Town 0000, +27 00 000 0000, fmconsulting.co.za, Reg. 0000/...,
+   VAT 0000000000. Send this kit and that list to any designer and they can
+   swap them by hand.
+
+
+THE PALETTE
+-----------
+Ink        #0F1211   RGB 15 18 17     CMYK 63 52 52 100   Pantone 419 C
+Paper      #F2F3F0   RGB 242 243 240  CMYK 3 2 4 0        uncoated natural white
+Graphite   #585E5B   RGB 88 94 91     CMYK 60 47 51 17    Pantone 7540 C
+Silver     #C6C9C4   RGB 198 201 196  CMYK 24 17 22 0     Pantone 428 C
+Mist       #E4E6E1   RGB 228 230 225  CMYK 11 7 11 0      Pantone 427 C
+
+There is no accent colour. Adding one is the fastest way to make this look
+like everyone else's identity.
+
+
+01 · LOGO
+---------
+fm-primary / fm-compact / fm-icon      the three optical cuts of the mark
+fm-icon-16px                            hand-set pixel glyph, favicon only
+fm-lockup-horizontal                    mark + wordmark, the default lockup
+fm-lockup-stacked                       for narrow or square spaces
+fm-monogram                             mark alone
+-descriptor                             adds the rule + GROWTH SYSTEMS line
+-reverse                                for dark grounds — NOT an inversion of
+                                        the positive file; strokes are trimmed
+                                        and the aperture opened
+
+Which cut: primary above 64 px / 24 mm, compact 32–64 px / 12–24 mm,
+icon below 32 px, pixel glyph at 16 px. Clear space is 2 w on every side
+(w = the width of the spine). Type in the lockups is outlined — the files
+carry no font dependency.
+
+
+02 · FONTS
+----------
+Archivo           300 / 400 / 500 / 600 / 700   headings and body
+Archivo Expanded  400 / 500 / 600               wordmark and covers, caps only
+IBM Plex Mono     400 / 500                     figures, labels, addresses
+
+Both families are SIL Open Font License — free to install, embed and share.
+Licences included. Also available from Google Fonts if you prefer web-hosted.
+
+
+03 · STATIONERY
+---------------
+fm-business-card.pdf         85 × 55 mm, 2 pages (front = ink, back = paper).
+                             3 mm bleed, crop marks. Duplex, print both sides.
+fm-compliments-slip.pdf      210 × 99 mm, 3 mm bleed, crop marks.
+fm-letterhead.pdf            A4 exact size, no bleed — office-printer ready.
+fm-letterhead-continuation   A4, page 2 onward.
+fm-envelope-dl.pdf           220 × 110 mm, prints onto pre-made DL envelopes.
+
+Tell your printer: uncoated stock, 350 gsm for the card. The PDFs are RGB —
+hand them the Pantone and CMYK values above for an accurate conversion, or
+ask for a proof before the run.
+
+
+04 · DOCUMENTS
+--------------
+Proposal (4 pp: cover, contents, content page, commercials), invoice and
+one-page case study. The sample copy is realistic on purpose — it stresses the
+layout properly. Replace the words, keep the structure. HTML masters are in
+07-Source if you want to edit rather than regenerate.
+
+
+05 · PRESENTATION
+-----------------
+fm-deck-template.pptx — 8 slides: cover, contents, section divider,
+two-column, statement, data, table, closing. Every slide has speaker notes
+explaining what it is for. Ink for cover / dividers / close, paper between,
+so a deck reads as bracketed rather than uniform.
+
+Duplicate a slide to reuse a layout. Do not add a colour.
+
+
+06 · DIGITAL
+------------
+fm-avatar-dark / -light      400, 800, 1000 px — LinkedIn, X, WhatsApp
+fm-linkedin-cover            1584 × 396, dark and light
+fm-call-background           1920 × 1080, dark and light
+favicon-16 … 512, .ico, .svg complete favicon set
+fm-email-signature.html      with the lockup as an embedded image
+fm-email-signature-typeonly  no image — for clients that strip them (Gmail
+                             sometimes does); this one always renders
+
+To install a signature: open the .html in a browser, select all, copy, paste
+into your mail client's signature editor.
+
+
+07 · SOURCE
+-----------
+The identity is not a folder of files that will drift apart — it is a small
+program that emits them. brand.py holds every constant; mark.py holds the
+mark geometry; printkit.py the print scaffolding; the rest are the pieces.
+Change a number, re-run, and everything regenerates consistently.
+
+
+SIX WAYS TO BREAK IT
+--------------------
+Never re-colour the mark.        Never stretch or rotate it.
+Never outline it.                Never place it on a busy photograph.
+Never rebuild a lockup by eye.   Never mix cuts on one surface.
+
+
+FM Consulting (Pty) Ltd · brand system v1.0 · August 2026
