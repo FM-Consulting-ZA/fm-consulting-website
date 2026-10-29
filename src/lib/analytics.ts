@@ -1,8 +1,8 @@
 /**
- * Site measurement: GA4 + Meta Pixel.
+ * Site measurement: GA4 + Meta Pixel + Microsoft Clarity.
  *
  * GA4 is bootstrapped in index.html so the first page_view fires as early as
- * possible. The Meta Pixel is injected here. Both run only on the production
+ * possible. The Meta Pixel and Clarity are injected here. All run only on the production
  * domain (analyticsConfig.productionHost); everywhere else every helper below
  * is a silent no-op, so localhost and Vercel previews never reach the reports.
  *
@@ -12,8 +12,8 @@
  *
  * Cookie choice: visitors from the UK, the EEA and Switzerland see a small,
  * non-blocking notice and nothing that sets tracking cookies runs until they
- * accept (GA4 runs in Consent Mode with storage denied; the Meta Pixel does
- * not load). Everyone else sees nothing and measurement runs as normal. A
+ * accept (GA4 runs in Consent Mode with storage denied; the Meta Pixel and
+ * Clarity do not load). Everyone else sees nothing and measurement runs as normal. A
  * Global Privacy Control signal is honoured everywhere as a "decline".
  */
 import { analyticsConfig } from '@/config';
@@ -28,11 +28,14 @@ type Fbq = ((...args: unknown[]) => void) & {
   version: string;
 };
 
+type Clarity = ((...args: unknown[]) => void) & { q?: unknown[] };
+
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
     fbq?: Fbq;
     _fbq?: Fbq;
+    clarity?: Clarity;
   }
 }
 
@@ -92,6 +95,25 @@ function loadMetaPixel(pixelId: string) {
 
   fbq('init', pixelId);
   fbq('track', 'PageView');
+}
+
+/* ------------------------------------------------------------------ */
+/* Microsoft Clarity bootstrap (Microsoft's tag, typed)                 */
+/* ------------------------------------------------------------------ */
+
+// Clarity's default masking hides what visitors type into form fields, so
+// contact form and newsletter entries never reach the recordings.
+function loadClarity(projectId: string) {
+  if (window.clarity) return;
+  const clarity = function (...args: unknown[]) {
+    (clarity.q = clarity.q || []).push(args);
+  } as Clarity;
+  window.clarity = clarity;
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.clarity.ms/tag/${projectId}`;
+  document.head.appendChild(script);
 }
 
 /* ------------------------------------------------------------------ */
@@ -234,8 +256,14 @@ function applyConsent(choice: ConsentChoice) {
   if (choice === 'granted') {
     if (analyticsConfig.metaPixelId) loadMetaPixel(analyticsConfig.metaPixelId);
     if (typeof window.fbq === 'function') window.fbq('consent', 'grant');
+    if (analyticsConfig.clarityId) loadClarity(analyticsConfig.clarityId);
   } else if (typeof window.fbq === 'function') {
     window.fbq('consent', 'revoke');
+  }
+  // Clarity Consent API v2. On "denied" Clarity deletes its cookies, ends the
+  // session and stops persisting an ID; it won't load at all on later visits.
+  if (typeof window.clarity === 'function') {
+    window.clarity('consentv2', { ad_Storage: value, analytics_Storage: value });
   }
 }
 

@@ -148,7 +148,7 @@ export function LegalLayout({ docNumber, title, lede, sections, alsoSee }: Legal
                 </span>
                 <span className="legal-meta-dot" aria-hidden="true">·</span>
                 <span>
-                  Last updated <time dateTime={legalDates.iso}>{legalDates.updated}</time>
+                  Last updated <time dateTime={legalDates.updatedIso}>{legalDates.updated}</time>
                 </span>
               </p>
             </div>

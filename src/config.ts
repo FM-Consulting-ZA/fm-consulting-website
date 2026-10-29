@@ -8,6 +8,8 @@ export const analyticsConfig = {
   ga4Id: 'G-Z729V3H6EY',
   /** Meta Pixel (dataset) ID from Events Manager. Empty = the pixel stays off. */
   metaPixelId: '2156431668306851', // dataset "FM Consulting Website", FM Consulting Pty Ltd business
+  /** Microsoft Clarity project ID (heatmaps and session recordings). Empty = Clarity stays off. */
+  clarityId: 'z5cwm7ff3x',
 };
 
 // The registered entity, as it appears on the CIPC registration certificate.
@@ -30,8 +32,9 @@ export const legalEntity = {
 // One date drives both legal pages' "Effective" and "Last updated" lines.
 export const legalDates = {
   effective: '4 October 2026',
-  updated: '4 October 2026',
+  updated: '29 October 2026',
   iso: '2026-10-04',
+  updatedIso: '2026-10-29',
 };
 
 export interface SiteConfig {

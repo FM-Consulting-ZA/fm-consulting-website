@@ -87,6 +87,12 @@ const sections: LegalSection[] = [
               improving the Site or, for visitors from the UK, the EEA and Switzerland, your consent.
             </>,
             <>
+              <strong>Improving how the Site works</strong> — seeing where visitors click, scroll and get stuck,
+              using Microsoft Clarity heatmaps and session recordings. Clarity masks what you type into forms, so
+              your enquiry and email address are not recorded. Basis: our legitimate interest in improving the Site
+              or, for visitors from the UK, the EEA and Switzerland, your consent.
+            </>,
+            <>
               <strong>Measuring and improving our advertising</strong> — measuring whether our ads on Facebook and
               Instagram lead to visits and enquiries, and showing our ads to people who have visited the Site, using
               the Meta Pixel. Basis: our legitimate interest in marketing our own services or, for visitors from the
@@ -126,7 +132,8 @@ const sections: LegalSection[] = [
               inbox.
             </>,
             <>
-              <strong>Microsoft</strong> — our email service, where enquiries are received and answered.
+              <strong>Microsoft</strong> — our email service, where enquiries are received and answered, and
+              Microsoft Clarity, for heatmaps and session recordings of how the Site is used.
             </>,
             <>
               <strong>Google</strong> — Google Analytics 4, for Site measurement.
@@ -163,6 +170,11 @@ const sections: LegalSection[] = [
               <code>_ga_&lt;ID&gt;</code> distinguish visitors and sessions. They last up to two years.
             </>,
             <>
+              <strong>Analytics — Microsoft Clarity.</strong> The <code>_clck</code> and <code>_clsk</code> cookies
+              recognise a returning visitor and join page views into one session. Microsoft may also set its own
+              cookies, such as <code>MUID</code> and <code>CLID</code>, which it uses across its services.
+            </>,
+            <>
               <strong>Advertising — Meta Pixel.</strong> The <code>_fbp</code> cookie links visits to ad activity and
               lasts up to 90 days. Meta may also use its own cookies if you are logged in to Facebook or Instagram.
             </>,
@@ -171,7 +183,7 @@ const sections: LegalSection[] = [
         <H3 n="5.1">Visitors from the UK, the EEA and Switzerland</H3>
         <P>
           If you visit from the United Kingdom, the European Economic Area or Switzerland, analytics and advertising
-          cookies stay off unless you accept them in the cookie notice. Until then, the Meta Pixel does not load and
+          cookies stay off unless you accept them in the cookie notice. Until then, the Meta Pixel and Microsoft Clarity do not load and
           Google Analytics runs in a cookieless mode that sends no cookie identifiers. To decide whether to show the notice,
           we check the country you are visiting from, as indicated by your IP address. We don’t store your IP
           address.
