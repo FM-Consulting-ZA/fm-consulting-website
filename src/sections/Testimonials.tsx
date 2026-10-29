@@ -5,8 +5,6 @@ import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { testimonialsConfig } from '@/config';
 
 export function Testimonials() {
-  if (!testimonialsConfig.heading && testimonialsConfig.testimonials.length === 0) return null;
-
   const testimonials = testimonialsConfig.testimonials;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -79,7 +77,7 @@ export function Testimonials() {
         >
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Image Side */}
-            <div className="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden bg-exvia-subtle rounded-lg">
+            <div className="group relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden bg-exvia-subtle rounded-lg">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
@@ -94,8 +92,9 @@ export function Testimonials() {
                 >
                   <img
                     src={testimonial.image}
-                    alt={testimonial.author}
-                    className="w-full h-full object-cover"
+                    alt={testimonial.company}
+                    loading="lazy"
+                    className="w-full h-full object-cover grade-img"
                   />
                 </div>
               ))}

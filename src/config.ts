@@ -1,5 +1,41 @@
-// FM Consulting Pty Ltd - Site Configuration
+// FM Consulting ZA (Pty) Ltd - Site Configuration
 // Premium Business Consulting Website
+
+// Measurement IDs. Both tags load only on the production domain, so localhost
+// and Vercel previews never pollute reports.
+export const analyticsConfig = {
+  productionHost: 'www.fmconsultingza.co.za',
+  ga4Id: 'G-Z729V3H6EY',
+  /** Meta Pixel (dataset) ID from Events Manager. Empty = the pixel stays off. */
+  metaPixelId: '2156431668306851', // dataset "FM Consulting Website", FM Consulting Pty Ltd business
+  /** Microsoft Clarity project ID (heatmaps and session recordings). Empty = Clarity stays off. */
+  clarityId: 'z5cwm7ff3x',
+};
+
+// The registered entity, as it appears on the CIPC registration certificate.
+// Used by the legal pages and the footer.
+export const legalEntity = {
+  name: 'FM Consulting ZA (Pty) Ltd',
+  tradingName: 'FM Consulting',
+  registrationNumber: '2026/673704/07',
+  registeredOn: '24 August 2026',
+  jurisdiction: 'South Africa',
+  /** Public-facing location only. The full registered office is on record at the CIPC. */
+  registeredOffice: 'Wynberg, Cape Town',
+  informationOfficer: 'Fouad Maasdorp',
+  informationOfficerRole: 'Director',
+  email: 'info@fmconsultingza.co.za',
+  phone: '+27 62 897 6939',
+  website: 'www.fmconsultingza.co.za',
+};
+
+// One date drives both legal pages' "Effective" and "Last updated" lines.
+export const legalDates = {
+  effective: '4 October 2026',
+  updated: '29 October 2026',
+  iso: '2026-10-04',
+  updatedIso: '2026-10-29',
+};
 
 export interface SiteConfig {
   language: string;
@@ -92,15 +128,15 @@ export const aboutConfig: AboutConfig = {
   experienceValue: "15+",
   experienceLabel: "Years of\nCombined Experience",
   stats: [
-    { value: "200+", label: "Businesses\nAdvised" },
-    { value: "R500M+", label: "Revenue\nImpacted" },
-    { value: "85%", label: "Client\nRetention" },
+    { value: "25+", label: "Businesses\nAdvised" },
+    { value: "R750M+", label: "Client Revenue\nInfluenced" },
+    { value: "75%", label: "Client\nRetention" },
   ],
   images: [
-    { src: "/images/about-1.jpg", alt: "Strategic planning session" },
-    { src: "/images/about-2.jpg", alt: "Analytics and data visualization" },
-    { src: "/images/about-3.jpg", alt: "Executive team collaboration" },
-    { src: "/images/about-4.jpg", alt: "Professional workspace" },
+    { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80", alt: "Strategic planning session" },
+    { src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80", alt: "Analytics and data visualization" },
+    { src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80", alt: "Executive team collaboration" },
+    { src: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1200&q=80", alt: "Professional workspace" },
   ],
 };
 
@@ -189,38 +225,35 @@ export interface PortfolioConfig {
 export const portfolioConfig: PortfolioConfig = {
   label: "Client Success",
   heading: "Businesses We've Helped Grow",
-  description: "We work with ambitious companies across South Africa, from hospitality brands and professional services to e-commerce and B2B technology firms. Each engagement is tailored to deliver measurable commercial outcomes.",
+  description: "We work with ambitious companies in South Africa and abroad — hospitality, e-commerce, professional services and manufacturing. Each engagement is scoped to deliver measurable commercial outcomes.",
+  // Longest-running engagement leads and carries `featured` (a double-width
+  // hero card); the rest run newest first. A five-year retained client is the
+  // strongest evidence on the page for the retention figure above.
   projects: [
     {
-      title: "The Reserve Restaurant Group",
+      title: "Lobster Tavern",
       category: "Hospitality",
-      year: "2024",
-      image: "/images/portfolio-1.jpg",
+      year: "2021 – Present",
+      image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80",
       featured: true,
     },
     {
-      title: "Luxe Home Collections",
+      title: "International Tobacco Manufacturer",
+      category: "FMCG / Manufacturing",
+      year: "2026",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      title: "Mr Telly",
       category: "E-commerce",
-      year: "2024",
-      image: "/images/portfolio-2.jpg",
+      year: "2025",
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
     },
     {
-      title: "Argus Advisory Partners",
+      title: "Thynkverse",
       category: "Professional Services",
-      year: "2023",
-      image: "/images/portfolio-3.jpg",
-    },
-    {
-      title: "B2B Connect Platform",
-      category: "Technology",
-      year: "2023",
-      image: "/images/portfolio-4.jpg",
-    },
-    {
-      title: "Foundry Co-Working Spaces",
-      category: "SME / Founder-led",
-      year: "2023",
-      image: "/images/portfolio-5.jpg",
+      year: "2024",
+      image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80",
     },
   ],
   cta: {
@@ -233,6 +266,12 @@ export const portfolioConfig: PortfolioConfig = {
 };
 
 // Testimonials section configuration
+//
+// WARNING: the three entries below are placeholder copy from the original
+// site build. The people named do not exist and the figures are invented.
+// The section is currently NOT rendered (see HomePage.tsx). Do not restore
+// it until every quote is real, attributed to a named person who has given
+// permission, and carries figures you can evidence.
 export interface TestimonialItem {
   quote: string;
   author: string;
@@ -257,7 +296,7 @@ export const testimonialsConfig: TestimonialsConfig = {
       author: "Sarah Mitchell",
       role: "Managing Director",
       company: "The Reserve Restaurant Group",
-      image: "/images/testimonial-1.jpg",
+      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
       rating: 5,
     },
     {
@@ -265,7 +304,7 @@ export const testimonialsConfig: TestimonialsConfig = {
       author: "David Nkosi",
       role: "CEO",
       company: "Argus Advisory Partners",
-      image: "/images/testimonial-2.jpg",
+      image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80",
       rating: 5,
     },
     {
@@ -273,7 +312,7 @@ export const testimonialsConfig: TestimonialsConfig = {
       author: "Emma van der Merwe",
       role: "Founder",
       company: "Luxe Home Collections",
-      image: "/images/testimonial-3.jpg",
+      image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1200&q=80",
       rating: 5,
     },
   ],
@@ -301,7 +340,7 @@ export const ctaConfig: CTAConfig = {
   description: "Book a consultation with our team. We'll discuss your business challenges, identify opportunities, and outline how FM Consulting can help you achieve measurable commercial outcomes.",
   buttonText: "Book Your Consultation",
   buttonHref: "/contact",
-  email: "hello@fmconsulting.co.za",
+  email: "info@fmconsultingza.co.za",
   backgroundImage: "/images/cta-bg.jpg",
 };
 
@@ -357,25 +396,32 @@ export const footerConfig: FooterConfig = {
     {
       title: "Resources",
       links: [
-        { label: "Case Studies", href: "#" },
-        { label: "Growth Framework", href: "#" },
-        { label: "FAQ", href: "#" },
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
+        { label: "Client Success", href: "/industries" },
+        { label: "Growth Framework", href: "/why-fm" },
+        { label: "Insights", href: "/insights" },
+        { label: "Book a Consultation", href: "/contact" },
       ],
     },
   ],
+  // Official business profiles. An entry with an empty href is not rendered,
+  // so a profile can be added here the moment its URL exists.
   socialLinks: [
-    { iconName: "Linkedin", href: "#", label: "LinkedIn" },
-    { iconName: "Twitter", href: "#", label: "Twitter" },
-    { iconName: "Instagram", href: "#", label: "Instagram" },
+    { iconName: "Linkedin", href: "", label: "LinkedIn" },
+    { iconName: "Facebook", href: "https://www.facebook.com/823784920806684", label: "Facebook" },
+    { iconName: "Instagram", href: "https://www.instagram.com/fmconsultingza/", label: "Instagram" },
+    { iconName: "Twitter", href: "", label: "X (Twitter)" },
+    {
+      iconName: "MessageCircle",
+      href: "https://wa.me/27628976939?text=Hi%20FM%20Consulting%2C%20I%20found%20you%20on%20your%20website.",
+      label: "WhatsApp",
+    },
   ],
   newsletterHeading: "Stay Informed",
-  newsletterDescription: "Receive insights on growth strategy, performance marketing, and business optimisation.",
+  newsletterDescription: "Receive insights on growth strategy, performance marketing, and business optimisation by email. Unsubscribe at any time.",
   newsletterButtonText: "Subscribe",
   newsletterPlaceholder: "Enter your email",
-  copyright: "© 2024 FM Consulting Pty Ltd. All rights reserved.",
-  credit: "Registered in South Africa. Reg. No. 2018/123456/07",
+  copyright: "© 2026 FM Consulting ZA (Pty) Ltd. All rights reserved.",
+  credit: "",
 };
 
 // Industries page configuration
@@ -556,87 +602,29 @@ export const whyFMConfig: WhyFMConfig = {
     },
   ],
   stats: [
-    { value: "3.2x", label: "Average ROI\nDelivered" },
-    { value: "94%", label: "Client\nSatisfaction" },
+    { value: "2.5x", label: "Average ROI\nDelivered" },
+    { value: "92%", label: "Client\nSatisfaction" },
     { value: "12", label: "Weeks Average\nTo First Results" },
   ],
 };
 
-// Insights/Articles page configuration
-export interface ArticleItem {
-  title: string;
-  excerpt: string;
-  category: string;
-  date: string;
-  readTime: string;
-  slug: string;
-}
-
+// Insights page configuration. Article content lives in src/data/articles.ts.
 export interface InsightsConfig {
   label: string;
   heading: string;
   description: string;
-  articles: ArticleItem[];
 }
 
 export const insightsConfig: InsightsConfig = {
   label: "Insights",
   heading: "Thoughts on Growth, Strategy & Performance",
   description: "Practical insights and strategic perspectives on building businesses that grow sustainably and profitably.",
-  articles: [
-    {
-      title: "Why Marketing Efficiency Matters More Than Marketing Volume",
-      excerpt: "Most businesses focus on doing more marketing. The smart ones focus on doing better marketing. Here's how to shift from volume to efficiency.",
-      category: "Strategy",
-      date: "March 2024",
-      readTime: "6 min read",
-      slug: "marketing-efficiency-over-volume",
-    },
-    {
-      title: "The Real Cost of Poor Customer Journey Design",
-      excerpt: "Every friction point in your customer journey is costing you revenue. We break down how to identify and fix the leaks in your acquisition funnel.",
-      category: "Customer Experience",
-      date: "February 2024",
-      readTime: "8 min read",
-      slug: "cost-of-poor-customer-journey",
-    },
-    {
-      title: "What Most Businesses Misread About Acquisition Performance",
-      excerpt: "Looking at the wrong metrics leads to the wrong conclusions. Here's how to properly evaluate and optimise your customer acquisition efforts.",
-      category: "Analytics",
-      date: "February 2024",
-      readTime: "7 min read",
-      slug: "misreading-acquisition-performance",
-    },
-    {
-      title: "Retention Is Not a CRM Problem, It's a Growth Strategy Problem",
-      excerpt: "Businesses that treat retention as an afterthought are leaving money on the table. Here's why retention should be central to your growth strategy.",
-      category: "Growth",
-      date: "January 2024",
-      readTime: "5 min read",
-      slug: "retention-growth-strategy",
-    },
-    {
-      title: "How To Diagnose Where Your Business Is Really Bleeding Revenue",
-      excerpt: "A systematic approach to identifying the biggest opportunities for revenue improvement in your business.",
-      category: "Performance",
-      date: "January 2024",
-      readTime: "9 min read",
-      slug: "diagnose-revenue-bleeding",
-    },
-    {
-      title: "The SME Guide to Building a Performance Marketing Function",
-      excerpt: "How smaller businesses can build world-class marketing capabilities without enterprise-level budgets.",
-      category: "SME",
-      date: "December 2023",
-      readTime: "10 min read",
-      slug: "sme-performance-marketing-guide",
-    },
-  ],
 };
 
 // Contact page configuration
 export interface ContactConfig {
+  /** Web3Forms access key — form submissions are emailed to the address registered with this key. */
+  web3formsKey: string;
   label: string;
   heading: string;
   description: string;
@@ -659,13 +647,14 @@ export interface ContactConfig {
 }
 
 export const contactConfig: ContactConfig = {
+  web3formsKey: "64aa6f02-a054-4ad0-87c6-bb0712d3b50c",
   label: "Contact",
   heading: "Let's Discuss Your Growth Goals",
   description: "Ready to improve your business performance? Book a consultation with our team. We'll explore your challenges, identify opportunities, and outline how we can help.",
   formIntro: "Fill out the form below and we'll respond within 24 hours.",
   contactInfo: {
-    email: "hello@fmconsulting.co.za",
-    phone: "+27 21 555 0123",
+    email: "info@fmconsultingza.co.za",
+    phone: "+27 62 897 6939",
     address: "Cape Town, South Africa",
     hours: "Monday - Friday: 08:00 - 17:00 SAST",
   },

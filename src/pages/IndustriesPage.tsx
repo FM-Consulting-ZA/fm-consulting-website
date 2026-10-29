@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { industriesConfig } from '@/config';
@@ -75,7 +76,7 @@ export function IndustriesPage() {
                     <img
                       src={industry.image}
                       alt={industry.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="grade-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   
@@ -114,7 +115,7 @@ export function IndustriesPage() {
                         <ul className="space-y-1">
                           {industry.solutions.slice(0, 2).map((solution, i) => (
                             <li key={i} className="flex items-start gap-2 text-sm text-exvia-black/60">
-                              <span className="w-1 h-1 bg-green-500 rounded-full mt-1.5 flex-shrink-0" />
+                              <span className="w-1 h-1 bg-exvia-black rounded-full mt-1.5 flex-shrink-0" />
                               {solution}
                             </li>
                           ))}
@@ -122,13 +123,13 @@ export function IndustriesPage() {
                       </div>
                     </div>
 
-                    <a
-                      href="/contact"
+                    <Link
+                      to="/contact"
                       className="inline-flex items-center gap-2 mt-6 text-sm text-exvia-black font-medium hover:gap-3 transition-all"
                     >
                       Discuss Your Industry
                       <ArrowRight className="w-4 h-4" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               );
@@ -191,7 +192,7 @@ export function IndustriesPage() {
                         <ul className="space-y-2">
                           {industry.solutions.map((solution, i) => (
                             <li key={i} className="flex items-start gap-2 text-sm text-exvia-black/70">
-                              <span className="w-1 h-1 bg-green-500 rounded-full mt-1.5 flex-shrink-0" />
+                              <span className="w-1 h-1 bg-exvia-black rounded-full mt-1.5 flex-shrink-0" />
                               {solution}
                             </li>
                           ))}
@@ -205,7 +206,7 @@ export function IndustriesPage() {
                       <img
                         src={industry.image}
                         alt={industry.name}
-                        className="w-full h-full object-cover"
+                        className="grade-img w-full h-full object-cover"
                       />
                     </div>
                   </div>
@@ -228,18 +229,18 @@ export function IndustriesPage() {
               specific business grow.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-exvia-black font-medium rounded-lg hover:bg-white/90 transition-colors"
               >
                 Get in Touch
-              </a>
-              <a
-                href="/services"
+              </Link>
+              <Link
+                to="/services"
                 className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
               >
                 View All Services
-              </a>
+              </Link>
             </div>
           </div>
         </div>

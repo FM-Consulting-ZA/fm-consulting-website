@@ -38,19 +38,38 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        exvia: {
-          black: '#131313',
+        fm: {
+          ink: '#0F1211',
+          paper: '#F2F3F0',
+          graphite: '#585E5B',
+          silver: '#C6C9C4',
+          mist: '#E4E6E1',
           white: '#FFFFFF',
-          'base-black': '#1D1D1D',
-          subtle: '#EAEAEA',
-          border: '#EFEFF2',
-          blue: '#0082F3',
-          focus: '#4D65FF',
+          // Previous names, remapped so existing classes keep resolving.
+          black: '#0F1211',
+          grey: '#585E5B',
+          'off-white': '#E4E6E1',
+          border: '#C6C9C4',
+        },
+        // Legacy class alias retained to keep existing components stable.
+        exvia: {
+          black: '#0F1211',
+          white: '#F2F3F0',
+          'base-black': '#0F1211',
+          subtle: '#E4E6E1',
+          border: '#C6C9C4',
+          blue: '#0F1211',
+          focus: '#0F1211',
         },
       },
       fontFamily: {
-        geist: ['Geist', 'Arial', 'sans-serif'],
-        'geist-mono': ['GeistMono', 'Courier New', 'monospace'],
+        // Archivo carries the voice; IBM Plex Mono carries anything countable.
+        archivo: ['Archivo Variable', 'Archivo', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+        // Previous names, remapped so existing classes keep resolving.
+        geist: ['Archivo Variable', 'Archivo', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        inter: ['Archivo Variable', 'Archivo', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        'geist-mono': ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       fontSize: {
         'h1': ['clamp(3rem, 21vw, 21vw)', { lineHeight: '1', letterSpacing: '-0.04em' }],

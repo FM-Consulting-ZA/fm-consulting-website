@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { contactConfig } from '@/config';
+import { trackContactFormStart, trackEvent, trackLead } from '@/lib/analytics';
 import { Mail, Phone, MapPin, Clock, Send, Check } from 'lucide-react';
 
 export function ContactPage() {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ threshold: 0.2 });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+  const formStarted = useRef(false);
+
+  // First interaction with the form, so the funnel reads
+  // CTA click → form start → lead.
+  const handleFormFocus = () => {
+    if (formStarted.current) return;
+    formStarted.current = true;
+    trackContactFormStart();
+  };
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -18,10 +31,72 @@ export function ContactPage() {
     budget: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const buildMailto = () => {
+    const subject = encodeURIComponent(
+      `Consultation Request — ${formData.name}${formData.company ? ` (${formData.company})` : ''}`
+    );
+    const body = encodeURIComponent(
+      [
+        `Name: ${formData.name}`,
+        `Company: ${formData.company}`,
+        `Email: ${formData.email}`,
+        `Phone: ${formData.phone}`,
+        `Service Required: ${formData.service}`,
+        `Budget Range: ${formData.budget}`,
+        '',
+        'Message:',
+        formData.message,
+      ].join('\n')
+    );
+    return `mailto:${contactConfig.contactInfo.email}?subject=${subject}&body=${body}`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // In a real implementation, this would send the form data to a server
+    setError('');
+
+    // No key configured yet — fall back to the visitor's email client
+    if (!contactConfig.web3formsKey) {
+      trackLead({ method: 'mailto_fallback', service: formData.service, budget: formData.budget });
+      window.location.href = buildMailto();
+      setSubmitted(true);
+      return;
+    }
+
+    setSending(true);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: contactConfig.web3formsKey,
+          subject: `Consultation Request — ${formData.name}${formData.company ? ` (${formData.company})` : ''}`,
+          from_name: 'FM Consulting Website',
+          name: formData.name,
+          company: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          service: formData.service,
+          budget: formData.budget,
+          message: formData.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        // Key event in GA4 and a Lead in Meta. No personal details are
+        // sent, only the service and budget the visitor picked.
+        trackLead({ method: 'web3forms', service: formData.service, budget: formData.budget });
+        setSubmitted(true);
+      } else {
+        trackEvent('contact_form_error', { reason: 'web3forms_rejected' });
+        setError('Something went wrong sending your message. Please email us directly instead.');
+      }
+    } catch {
+      trackEvent('contact_form_error', { reason: 'network' });
+      setError('Something went wrong sending your message. Please email us directly instead.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -134,8 +209,8 @@ export function ContactPage() {
                 {/* Response Expectation */}
                 <div className="mt-8 p-4 bg-white border border-exvia-border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center bg-green-100 rounded-full">
-                      <Check className="w-4 h-4 text-green-600" />
+                    <div className="w-8 h-8 flex items-center justify-center bg-exvia-black rounded-full">
+                      <Check className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <div className="font-medium text-exvia-black">Fast Response</div>
@@ -156,8 +231,8 @@ export function ContactPage() {
               >
                 {submitted ? (
                   <div className="text-center py-12">
-                    <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-green-100 rounded-full">
-                      <Check className="w-8 h-8 text-green-600" />
+                    <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-exvia-black rounded-full">
+                      <Check className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-2xl font-semibold text-exvia-black mb-3">
                       Thank You!
@@ -167,7 +242,7 @@ export function ContactPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} onFocus={handleFormFocus} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-exvia-black mb-2">
@@ -293,16 +368,30 @@ export function ContactPage() {
                       />
                     </div>
 
+                    {error && (
+                      <p className="text-sm text-red-600">
+                        {error}{' '}
+                        <a href={buildMailto()} className="underline">
+                          Email us directly
+                        </a>
+                      </p>
+                    )}
+
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-exvia-black text-white font-medium rounded-lg hover:bg-exvia-black/90 transition-colors"
+                      disabled={sending}
+                      className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-exvia-black text-white font-medium rounded-lg hover:bg-exvia-black/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                       <Send className="w-4 h-4" />
-                      Send Message
+                      {sending ? 'Sending…' : 'Send Message'}
                     </button>
 
                     <p className="text-sm text-exvia-black/50 text-center">
-                      By submitting this form, you agree to our privacy policy.
+                      We use your details only to respond to your enquiry. See our{' '}
+                      <Link to="/privacy" className="underline underline-offset-4 hover:text-exvia-black">
+                        Privacy Policy
+                      </Link>
+                      .
                     </p>
                   </form>
                 )}

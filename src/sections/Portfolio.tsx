@@ -1,8 +1,9 @@
-import { } from 'react';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { ArrowUpRight } from 'lucide-react';
 import { portfolioConfig } from '@/config';
+import { ParallaxImage } from '@/components/motion/ParallaxImage';
+import { TextReveal } from '@/components/motion/Reveal';
 
 function ProjectCard({ project, index, isVisible }: { project: { title: string; category: string; year: string; image: string; featured?: boolean }; index: number; isVisible: boolean }) {
   return (
@@ -15,16 +16,15 @@ function ProjectCard({ project, index, isVisible }: { project: { title: string; 
       style={{ transitionDelay: `${index * 100}ms` }}
     >
       <div className="relative overflow-hidden bg-exvia-subtle">
-        <div className={cn(
-          'aspect-[4/3]',
-          project.featured && 'lg:aspect-[16/9]'
-        )}>
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out-cubic group-hover:scale-105"
-          />
-        </div>
+        <ParallaxImage
+          src={project.image}
+          alt={project.title}
+          imgClassName="grade-img"
+          className={cn(
+            'aspect-[4/3]',
+            project.featured && 'lg:aspect-[16/9]'
+          )}
+        />
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-exvia-black/0 group-hover:bg-exvia-black/20 transition-colors duration-500" />
@@ -56,10 +56,10 @@ function ProjectCard({ project, index, isVisible }: { project: { title: string; 
 }
 
 export function Portfolio() {
-  if (!portfolioConfig.heading && portfolioConfig.projects.length === 0) return null;
-
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.3 });
   const { containerRef: gridRef, visibleItems } = useStaggerAnimation(portfolioConfig.projects.length + 1, 120);
+
+  if (!portfolioConfig.heading && portfolioConfig.projects.length === 0) return null;
 
   return (
     <section id="portfolio" className="w-full py-24 lg:py-32 bg-exvia-subtle/30">
@@ -87,7 +87,7 @@ export function Portfolio() {
               )}
               style={{ transitionDelay: '100ms' }}
             >
-              {portfolioConfig.heading}
+              <TextReveal text={portfolioConfig.heading} />
             </h2>
           )}
 

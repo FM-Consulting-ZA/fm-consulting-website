@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { whyFMConfig, testimonialsConfig } from '@/config';
@@ -165,7 +166,7 @@ export function WhyFMPage() {
                     <td className="py-4 px-4 text-center text-exvia-black/60">{row.consultancy}</td>
                     <td className="py-4 px-4 text-center text-exvia-black font-medium bg-exvia-subtle/20">
                       <div className="flex items-center justify-center gap-2">
-                        <Check className="w-4 h-4 text-green-600" />
+                        <Check className="w-4 h-4 text-exvia-black" />
                         {row.fm}
                       </div>
                     </td>
@@ -197,7 +198,7 @@ export function WhyFMPage() {
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="w-4 h-4 fill-exvia-black text-exvia-black" />
                   ))}
                 </div>
                 <p className="text-exvia-black/70 mb-6 leading-relaxed">
@@ -207,7 +208,7 @@ export function WhyFMPage() {
                   <img
                     src={testimonial.image}
                     alt={testimonial.author}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className="grade-img w-12 h-12 rounded-full object-cover"
                   />
                   <div>
                     <div className="font-semibold text-exvia-black">{testimonial.author}</div>
@@ -232,18 +233,18 @@ export function WhyFMPage() {
               Book a consultation and see how our approach can help your business grow.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-exvia-black font-medium rounded-lg hover:bg-white/90 transition-colors"
               >
                 Book a Consultation
-              </a>
-              <a
-                href="/services"
+              </Link>
+              <Link
+                to="/services"
                 className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
               >
                 Explore Our Services
-              </a>
+              </Link>
             </div>
           </div>
         </div>
