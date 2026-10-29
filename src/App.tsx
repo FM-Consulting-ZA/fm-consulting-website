@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import { Navigation } from '@/components/Navigation';
 import { PageOverlay } from '@/components/PageOverlay';
 import { Footer } from '@/sections/Footer';
@@ -78,6 +79,9 @@ function App() {
 
           {/* Cookie choice — UK / EEA / CH visitors only */}
           <ConsentNotice />
+
+          {/* Vercel Web Analytics (cookieless) */}
+          <Analytics />
         </div>
       </SmoothScroll>
     </Router>
