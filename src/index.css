@@ -408,6 +408,11 @@
   cursor: none !important;
 }
 
+.cursor-in-frame .cursor-dot,
+.cursor-in-frame .cursor-ring {
+  opacity: 0 !important;
+}
+
 .cursor-dot,
 .cursor-ring {
   position: fixed;

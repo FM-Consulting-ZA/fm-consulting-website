@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import Lenis from 'lenis';
 import { useLocation } from 'react-router-dom';
+import { routeKey } from '@/lib/routeKey';
 
 let lenisInstance: Lenis | null = null;
 
@@ -39,14 +40,15 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // Scroll to top on route change
+  // Scroll to top on route change (not when opening a viewer over the same page)
+  const pageKey = routeKey(location.pathname);
   useEffect(() => {
     if (lenisInstance) {
       lenisInstance.scrollTo(0, { immediate: true });
     } else {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname]);
+  }, [pageKey]);
 
   return <>{children}</>;
 }

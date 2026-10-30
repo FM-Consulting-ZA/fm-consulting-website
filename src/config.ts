@@ -1,4 +1,5 @@
 // FM Consulting ZA (Pty) Ltd - Site Configuration
+import { workEnabled } from '@/data/work';
 // Premium Business Consulting Website
 
 // Measurement IDs. Both tags load only on the production domain, so localhost
@@ -69,6 +70,8 @@ export const navigationConfig: NavigationConfig = {
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Industries", href: "/industries" },
+    // Appears once at least one project on /work is published (see src/data/work.ts).
+    ...(workEnabled ? [{ label: "Work", href: "/work" }] : []),
     { label: "Why FM", href: "/why-fm" },
     { label: "Pricing", href: "/pricing" },
     { label: "Insights", href: "/insights" },
