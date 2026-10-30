@@ -85,10 +85,10 @@ export const workProjects: WorkProject[] = [
     // Tested 30 Oct 2026: Shopify sends X-Frame-Options DENY and
     // frame-ancestors 'none', so it cannot be embedded. Record a scroll-through,
     // save it as /public/work/nion.mp4, then switch to 'video'.
+    // Until then it opens in a new tab.
     view: 'link',
-    published: false,
-    clearance:
-      'Martin approved, 30 Oct 2026. Store is public. Waiting on the recording (or publish now as a new-tab link).',
+    published: true,
+    clearance: 'Martin approved, 30 Oct 2026. Store is public. Swap to video once recorded.',
   },
   {
     slug: 'lobster-tavern',
@@ -101,10 +101,10 @@ export const workProjects: WorkProject[] = [
     // Tested 30 Oct 2026: lobstertavern.com sends frame-ancestors 'none', so it
     // cannot be embedded. Either record a scroll-through to /public/work/lobster-tavern.mp4
     // and set `video`, or have the site allow https://www.fmconsultingza.co.za in
-    // frame-ancestors and switch back to 'embed'.
-    view: 'video',
-    published: false,
-    clearance: 'Lobster Tavern approved, 30 Oct 2026. Waiting on the recording or a frame-ancestors change.',
+    // frame-ancestors and switch back to 'embed'. Until then it opens in a new tab.
+    view: 'link',
+    published: true,
+    clearance: 'Lobster Tavern approved, 30 Oct 2026. Swap to video or embed when ready.',
   },
   {
     slug: 'thynkverse',
