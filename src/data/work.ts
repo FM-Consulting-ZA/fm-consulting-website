@@ -97,9 +97,13 @@ export const workProjects: WorkProject[] = [
     year: '2021 – Present',
     summary: 'Luxury seafood dining in Johannesburg and Cape Town.',
     url: 'https://lobstertavern.com',
-    view: 'embed',
+    // Tested 30 Oct 2026: lobstertavern.com sends frame-ancestors 'none', so it
+    // cannot be embedded. Either record a scroll-through to /public/work/lobster-tavern.mp4
+    // and set `video`, or have the site allow https://www.fmconsultingza.co.za in
+    // frame-ancestors and switch back to 'embed'.
+    view: 'video',
     published: false,
-    clearance: 'Live client site: confirm Lobster Tavern is happy to be shown.',
+    clearance: 'Live client site: confirm Lobster Tavern is happy to be shown. Needs the recording first.',
   },
   {
     slug: 'thynkverse',
@@ -107,7 +111,9 @@ export const workProjects: WorkProject[] = [
     kind: 'live',
     sector: 'Professional Services',
     year: '2024',
-    summary: 'Operations software and automation for South African call centres.',
+    summary:
+      'A business technology studio that connects brand, digital products, systems and automation around how each client actually works.',
+    // Tested 30 Oct 2026: embeds cleanly.
     url: 'https://www.thynkverse.co.za',
     view: 'embed',
     published: false,
