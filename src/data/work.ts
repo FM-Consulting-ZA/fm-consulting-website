@@ -96,11 +96,10 @@ export const workProjects: WorkProject[] = [
     sector: 'Hospitality',
     year: '2021 – Present',
     summary: 'Luxury seafood dining in Johannesburg and Cape Town.',
-    // Live address still to confirm. The Vercel build is behind Vercel login,
-    // so it cannot be embedded for the public.
+    url: 'https://lobstertavern.com',
     view: 'embed',
     published: false,
-    clearance: 'Confirm the live URL and that it allows framing; otherwise record a video.',
+    clearance: 'Live client site: confirm Lobster Tavern is happy to be shown.',
   },
   {
     slug: 'thynkverse',
@@ -109,9 +108,10 @@ export const workProjects: WorkProject[] = [
     sector: 'Professional Services',
     year: '2024',
     summary: 'Operations software and automation for South African call centres.',
+    url: 'https://www.thynkverse.co.za',
     view: 'embed',
     published: false,
-    clearance: 'Confirm the live URL and that it allows framing; Stan to agree to the embed.',
+    clearance: 'Stan to agree to Thynkverse appearing on the FM site.',
   },
   {
     slug: 'chapmans-peak',
