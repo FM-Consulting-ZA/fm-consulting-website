@@ -66,7 +66,6 @@ export interface NavigationConfig {
 export const navigationConfig: NavigationConfig = {
   logo: "FM Consulting",
   links: [
-    { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Industries", href: "/industries" },

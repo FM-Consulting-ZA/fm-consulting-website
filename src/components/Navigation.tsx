@@ -73,13 +73,13 @@ export function Navigation() {
 
             {/* Desktop Navigation */}
             {navigationConfig.links.length > 0 && (
-              <div className="hidden lg:flex items-center gap-10">
+              <div className="hidden lg:flex items-center gap-6 xl:gap-9">
                 {navigationConfig.links.map((link) => (
                   <Link
                     key={link.label}
                     to={link.href}
                     className={cn(
-                      "text-base transition-colors duration-500 relative group",
+                      "text-[15px] xl:text-base whitespace-nowrap transition-colors duration-500 relative group",
                       useLightText 
                         ? "text-white/90 hover:text-white" 
                         : "text-exvia-black/80 hover:text-exvia-black"
@@ -102,6 +102,7 @@ export function Navigation() {
                   to={navigationConfig.contactHref || "/contact"}
                   variant={useLightText ? "outline-white" : "primary"}
                   size="md"
+                  className="whitespace-nowrap lg:px-4 xl:px-6"
                 >
                   {navigationConfig.contactLabel}
                 </AnimatedButton>
