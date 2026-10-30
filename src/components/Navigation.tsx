@@ -16,7 +16,7 @@ export function Navigation() {
     // Fade in navbar after page load
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1800);
+    }, 700);
 
     return () => clearTimeout(timer);
   }, []);
@@ -41,21 +41,33 @@ export function Navigation() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out-circ',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4',
-          isScrolled || !isHomePage ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+          isScrolled || !isHomePage
+            ? 'bg-white/95 backdrop-blur-md border-b border-fm-ink/10'
+            : 'bg-transparent border-b border-transparent'
         )}
       >
-        <div className="w-full px-6 lg:px-12 py-3">
+        {/* Same container as the page, so the logo and the button line up
+            with the content edges below. */}
+        <div className="container-large px-6 lg:px-12 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
             {navigationConfig.logo && (
               <Link
                 to="/"
                 aria-label="FM Consulting home"
-                className="flex items-center bg-fm-paper text-fm-ink border border-fm-ink/10 px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fm-ink"
+                className="flex items-center py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
               >
                 {/* The real lockup — mark and wordmark at fixed 3w spacing.
-                    Never rebuild this from an icon plus letterspaced text. */}
-                <BrandLogo variant="lockup-compact" className="h-6 sm:h-7" />
+                    Never rebuild this from an icon plus letterspaced text.
+                    Knockout drawing while the nav sits on the ink hero. */}
+                <BrandLogo
+                  variant="lockup-compact"
+                  reverse={useLightText && !isMenuOpen}
+                  className={cn(
+                    'h-7 sm:h-8 transition-colors duration-500',
+                    useLightText && !isMenuOpen ? 'text-fm-paper' : 'text-fm-ink'
+                  )}
+                />
               </Link>
             )}
 

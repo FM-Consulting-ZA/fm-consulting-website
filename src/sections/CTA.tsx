@@ -1,111 +1,24 @@
-import { cn } from '@/lib/utils';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { AnimatedButton } from '@/components/AnimatedButton';
-import { ArrowRight, Mail } from 'lucide-react';
 import { ctaConfig } from '@/config';
-import { ParallaxImage } from '@/components/motion/ParallaxImage';
-import { Magnetic } from '@/components/motion/Magnetic';
-import { TextReveal } from '@/components/motion/Reveal';
+import { Section } from '@/components/layout/Section';
+import { AnimatedButton } from '@/components/AnimatedButton';
 
+/** The one closing ask, on ink so it runs straight into the footer. */
 export function CTA() {
-  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.3 });
-
-  if (!ctaConfig.heading && !ctaConfig.description) return null;
+  if (!ctaConfig.heading) return null;
 
   return (
-    <section id="contact" className="relative w-full py-32 lg:py-48 overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <ParallaxImage
-          src={ctaConfig.backgroundImage}
-          alt=""
-          className="w-full h-full"
-          imgClassName="grayscale contrast-[1.04]"
-          intensity={0.18}
-        />
-        <div className="absolute inset-0 bg-exvia-black/60" />
+    <Section tone="ink" compact label={ctaConfig.label} heading={ctaConfig.heading} intro={<p>{ctaConfig.description}</p>} className="pb-0 lg:pb-0">
+      <div className="flex flex-wrap items-center gap-x-9 gap-y-5" data-cta-location="home_closing">
+        <AnimatedButton to={ctaConfig.buttonHref} variant="secondary" size="lg" className="border-fm-paper">
+          {ctaConfig.buttonText}
+        </AnimatedButton>
+        <a
+          href={`mailto:${ctaConfig.email}`}
+          className="fm-link text-base text-fm-paper/75 decoration-fm-paper/35 hover:text-fm-paper hover:decoration-fm-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fm-paper"
+        >
+          {ctaConfig.email}
+        </a>
       </div>
-
-      {/* Content */}
-      <div ref={sectionRef} className="relative z-10 container-large px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto text-center">
-          {/* Role Tags */}
-          {ctaConfig.tags.length > 0 && (
-            <div
-              className={cn(
-                'flex flex-wrap justify-center gap-3 mb-8 transition-all duration-800 ease-out-quart',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              )}
-            >
-              {ctaConfig.tags.map((tag, index) => (
-                <span key={index} className="px-4 py-2 text-xs font-geist-mono text-white/80 border border-white/20 rounded-full">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Main Heading */}
-          {ctaConfig.heading && (
-            <h2
-              className={cn(
-                'text-3xl lg:text-5xl font-semibold text-white leading-tight transition-all duration-800 ease-out-quart',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '100ms' }}
-            >
-              <TextReveal text={ctaConfig.heading} />
-            </h2>
-          )}
-
-          {/* Subtext */}
-          {ctaConfig.description && (
-            <p
-              className={cn(
-                'mt-6 text-lg text-white/70 max-w-xl mx-auto transition-all duration-800 ease-out-quart',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '200ms' }}
-            >
-              {ctaConfig.description}
-            </p>
-          )}
-
-          {/* CTA Buttons */}
-          <div
-            className={cn(
-              'flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 transition-all duration-800 ease-out-quart',
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            )}
-            style={{ transitionDelay: '300ms' }}
-          >
-            {ctaConfig.buttonText && (
-              <Magnetic strength={0.3}>
-                <AnimatedButton
-                  to={ctaConfig.buttonHref}
-                  variant="primary"
-                  size="lg"
-                  showIcon
-                  className="bg-white text-exvia-black hover:bg-white/90"
-                >
-                  {ctaConfig.buttonText}
-                </AnimatedButton>
-              </Magnetic>
-            )}
-
-            {ctaConfig.email && (
-              <a
-                href={`mailto:${ctaConfig.email}`}
-                className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors group"
-              >
-                <Mail className="w-4 h-4" />
-                <span>{ctaConfig.email}</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
+    </Section>
   );
 }

@@ -7,8 +7,6 @@ import { PageOverlay } from '@/components/PageOverlay';
 import { Footer } from '@/sections/Footer';
 import { usePageLoad } from '@/hooks/usePageLoad';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
-import { Cursor } from '@/components/motion/Cursor';
-import { Grain } from '@/components/motion/Grain';
 import { PageTransition } from '@/components/motion/PageTransition';
 import { Seo } from '@/components/Seo';
 import { ConsentNotice } from '@/components/ConsentNotice';
@@ -63,10 +61,6 @@ function App() {
         <div className="min-h-screen bg-white">
           {/* Page Load Overlay */}
           <PageOverlay isVisible={showOverlay} />
-
-          {/* Custom cursor + film grain */}
-          <Cursor />
-          <Grain />
 
           {/* Navigation */}
           <Navigation />

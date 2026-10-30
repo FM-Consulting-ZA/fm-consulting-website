@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { insightsConfig } from '@/config';
 import { articles } from '@/data/articles';
+import { NewsletterSignup } from '@/components/NewsletterSignup';
 
 const categoryIcons: Record<string, React.ElementType> = {
   'AI & Automation': Bot,
@@ -257,6 +258,8 @@ export function InsightsPage() {
           </div>
         </div>
       </section>
+
+      <NewsletterSignup />
 
       <section className="w-full py-16 lg:py-24 bg-exvia-black text-white">
         <div className="container-large px-6 lg:px-12 text-center">

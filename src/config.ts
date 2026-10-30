@@ -73,34 +73,27 @@ export const navigationConfig: NavigationConfig = {
     { label: "Pricing", href: "/pricing" },
     { label: "Insights", href: "/insights" },
   ],
-  contactLabel: "Book Consultation",
+  contactLabel: "Book a consultation",
   contactHref: "/contact",
 };
 
 // Hero section configuration
 export interface HeroConfig {
-  name: string;
-  roles: string[];
-  backgroundImage: string;
   headline: string;
-  subheadline: string;
+  lede: string;
   primaryCta: string;
+  primaryHref: string;
   secondaryCta: string;
+  secondaryHref: string;
 }
 
 export const heroConfig: HeroConfig = {
-  name: "FM Consulting",
-  roles: [
-    "Growth Strategy",
-    "Digital Marketing",
-    "Performance Analytics",
-    "Business Transformation",
-  ],
-  backgroundImage: "/images/hero-bg.jpg",
-  headline: "Build Growth Systems That Drive Measurable Business Performance",
-  subheadline: "We partner with ambitious South African businesses to improve acquisition, retention, efficiency, and commercial outcomes through strategy, analytics, and performance-led execution.",
-  primaryCta: "Book a Consultation",
-  secondaryCta: "Explore Our Services",
+  headline: "Break the cycle of spend and hope.",
+  lede: "FM Consulting finds where growth is leaking, fixes it, and builds the system that keeps it fixed: acquisition, conversion, retention and reporting tied back to revenue.",
+  primaryCta: "Book a consultation",
+  primaryHref: "/contact",
+  secondaryCta: "See pricing",
+  secondaryHref: "/pricing",
 };
 
 // About section configuration
@@ -116,6 +109,7 @@ export interface AboutImage {
 
 export interface AboutConfig {
   label: string;
+  heading: string;
   description: string;
   experienceValue: string;
   experienceLabel: string;
@@ -124,7 +118,8 @@ export interface AboutConfig {
 }
 
 export const aboutConfig: AboutConfig = {
-  label: "About Us",
+  label: "About",
+  heading: "Senior strategy without the agency overhead.",
   description: "FM Consulting is a South African business growth consultancy that operates at the intersection of strategy, data, and execution. We help SMEs, founder-led businesses, and established companies transform their commercial performance through disciplined, measurable approaches to growth. We do not chase vanity metrics. We build systems that improve efficiency, profitability, and long-term business performance.",
   experienceValue: "15+",
   experienceLabel: "Years of\nCombined Experience",
@@ -141,6 +136,24 @@ export const aboutConfig: AboutConfig = {
   ],
 };
 
+// "Our view" statement on the home page. The link points at the Insights
+// article that argues the same point at length.
+export interface ViewConfig {
+  label: string;
+  heading: string;
+  body: string;
+  linkLabel: string;
+  linkHref: string;
+}
+
+export const viewConfig: ViewConfig = {
+  label: "Our view",
+  heading: "Most businesses don't need more traffic. They need fewer leaks.",
+  body: "Before another rand goes into reach, we find out where the current spend stops working: the ad that never reaches the right person, the enquiry nobody follows up, the customer who buys once and disappears.",
+  linkLabel: "Read: Before you spend more on marketing",
+  linkHref: "/insights/before-you-spend-more-on-marketing",
+};
+
 // Services section configuration
 export interface ServiceItem {
   iconName: string;
@@ -152,12 +165,14 @@ export interface ServiceItem {
 export interface ServicesConfig {
   label: string;
   heading: string;
+  intro: string;
   services: ServiceItem[];
 }
 
 export const servicesConfig: ServicesConfig = {
-  label: "Our Services",
-  heading: "Strategic Solutions for Commercial Growth",
+  label: "Services",
+  heading: "Six disciplines, one growth system.",
+  intro: "Each one can be bought on its own. They work best together, because growth leaks between them as often as inside them.",
   services: [
     {
       iconName: "TrendingUp",
@@ -224,8 +239,8 @@ export interface PortfolioConfig {
 }
 
 export const portfolioConfig: PortfolioConfig = {
-  label: "Client Success",
-  heading: "Businesses We've Helped Grow",
+  label: "Work",
+  heading: "Businesses we've helped grow.",
   description: "We work with ambitious companies in South Africa and abroad — hospitality, e-commerce, professional services and manufacturing. Each engagement is scoped to deliver measurable commercial outcomes.",
   // Longest-running engagement leads and carries `featured` (a double-width
   // hero card); the rest run newest first. A five-year retained client is the
@@ -321,36 +336,25 @@ export const testimonialsConfig: TestimonialsConfig = {
 
 // CTA section configuration
 export interface CTAConfig {
-  tags: string[];
+  label: string;
   heading: string;
   description: string;
   buttonText: string;
   buttonHref: string;
   email: string;
-  backgroundImage: string;
 }
 
 export const ctaConfig: CTAConfig = {
-  tags: [
-    "Growth Strategy",
-    "Performance Marketing",
-    "Business Analytics",
-    "Customer Acquisition",
-  ],
-  heading: "Ready to Build a Growth System That Works?",
-  description: "Book a consultation with our team. We'll discuss your business challenges, identify opportunities, and outline how FM Consulting can help you achieve measurable commercial outcomes.",
-  buttonText: "Book Your Consultation",
+  label: "Contact",
+  heading: "Tell us where growth is stuck.",
+  description: "Book a consultation and you speak to a senior strategist from the first call. We respond within 24 hours.",
+  buttonText: "Book a consultation",
   buttonHref: "/contact",
   email: "info@fmconsultingza.co.za",
-  backgroundImage: "/images/cta-bg.jpg",
 };
 
-// Footer section configuration
-export interface FooterLinkColumn {
-  title: string;
-  links: { label: string; href: string }[];
-}
-
+// Footer section configuration. Three zones only: the mark and one line,
+// the page links, and how to reach us. Legal links sit in the bottom bar.
 export interface SocialLink {
   iconName: string;
   href: string;
@@ -358,51 +362,22 @@ export interface SocialLink {
 }
 
 export interface FooterConfig {
-  logo: string;
-  description: string;
-  columns: FooterLinkColumn[];
+  tagline: string;
+  links: { label: string; href: string }[];
   socialLinks: SocialLink[];
-  newsletterHeading: string;
-  newsletterDescription: string;
-  newsletterButtonText: string;
-  newsletterPlaceholder: string;
   copyright: string;
-  credit: string;
 }
 
 export const footerConfig: FooterConfig = {
-  logo: "FM Consulting",
-  description: "South African business growth consultancy helping companies improve acquisition, retention, efficiency, and commercial outcomes through strategy, analytics, and performance-led execution.",
-  columns: [
-    {
-      title: "Services",
-      links: [
-        { label: "Growth Strategy", href: "/services" },
-        { label: "Digital Marketing", href: "/services" },
-        { label: "Customer Acquisition", href: "/services" },
-        { label: "Analytics & Reporting", href: "/services" },
-        { label: "Business Performance", href: "/services" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { label: "About Us", href: "/about" },
-        { label: "Industries", href: "/industries" },
-        { label: "Why FM Consulting", href: "/why-fm" },
-        { label: "Insights", href: "/insights" },
-        { label: "Contact", href: "/contact" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { label: "Client Success", href: "/industries" },
-        { label: "Growth Framework", href: "/why-fm" },
-        { label: "Insights", href: "/insights" },
-        { label: "Book a Consultation", href: "/contact" },
-      ],
-    },
+  tagline: "Strategy. Execution. Results.",
+  links: [
+    { label: "About", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Industries", href: "/industries" },
+    { label: "Why FM", href: "/why-fm" },
+    { label: "Insights", href: "/insights" },
+    { label: "Contact", href: "/contact" },
   ],
   // Official business profiles. An entry with an empty href is not rendered,
   // so a profile can be added here the moment its URL exists.
@@ -417,12 +392,22 @@ export const footerConfig: FooterConfig = {
       label: "WhatsApp",
     },
   ],
-  newsletterHeading: "Stay Informed",
-  newsletterDescription: "Receive insights on growth strategy, performance marketing, and business optimisation by email. Unsubscribe at any time.",
-  newsletterButtonText: "Subscribe",
-  newsletterPlaceholder: "Enter your email",
   copyright: "© 2026 FM Consulting ZA (Pty) Ltd. All rights reserved.",
-  credit: "",
+};
+
+// Newsletter sign-up, shown at the foot of the Insights page.
+export interface NewsletterConfig {
+  heading: string;
+  description: string;
+  buttonText: string;
+  placeholder: string;
+}
+
+export const newsletterConfig: NewsletterConfig = {
+  heading: "Get new insights by email",
+  description: "Practical pieces on growth strategy, performance marketing and getting more out of what you already spend. Unsubscribe at any time.",
+  buttonText: "Subscribe",
+  placeholder: "Your email address",
 };
 
 // Industries page configuration
@@ -685,9 +670,9 @@ export interface ProcessConfig {
 }
 
 export const processConfig: ProcessConfig = {
-  label: "Our Process",
-  heading: "How We Work",
-  description: "A proven framework for delivering measurable business outcomes.",
+  label: "Method",
+  heading: "We diagnose before we build.",
+  description: "Five stages, in order. Nothing gets built until we know what it has to fix and how we will measure it.",
   steps: [
     {
       number: "01",
@@ -717,23 +702,3 @@ export const processConfig: ProcessConfig = {
   ],
 };
 
-// Focus areas strip configuration
-export interface FocusArea {
-  title: string;
-  iconName: string;
-}
-
-export interface FocusAreasConfig {
-  areas: FocusArea[];
-}
-
-export const focusAreasConfig: FocusAreasConfig = {
-  areas: [
-    { title: "Growth Strategy", iconName: "TrendingUp" },
-    { title: "Digital Acquisition", iconName: "Target" },
-    { title: "Analytics & Reporting", iconName: "BarChart3" },
-    { title: "Customer Lifecycle", iconName: "RefreshCw" },
-    { title: "Conversion Improvement", iconName: "ArrowUpRight" },
-    { title: "Business Performance", iconName: "Settings" },
-  ],
-};

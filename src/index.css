@@ -1530,3 +1530,127 @@
     display: none !important;
   }
 }
+
+/* ============ Home system ============
+   One type voice for the whole site. These values match the legal and
+   Insights pages (Archivo on its width axis, heavy and tight for display;
+   IBM Plex Mono only for figures and small meta). */
+
+.fm-display-1,
+.fm-display-2,
+.fm-display-3 {
+  font-family: 'Archivo Variable', Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-wrap: balance;
+}
+
+.fm-display-1 {
+  font-size: clamp(3rem, 6.4vw, 6.25rem);
+  font-stretch: 104%;
+  font-variation-settings: 'wdth' 104;
+  font-weight: 760;
+  line-height: 0.93;
+  letter-spacing: -0.058em;
+}
+
+.fm-display-2 {
+  font-size: clamp(2.25rem, 4.3vw, 4.25rem);
+  font-stretch: 103%;
+  font-variation-settings: 'wdth' 103;
+  font-weight: 720;
+  line-height: 0.97;
+  letter-spacing: -0.052em;
+}
+
+.fm-display-3 {
+  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
+  font-stretch: 102%;
+  font-variation-settings: 'wdth' 102;
+  font-weight: 660;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.fm-lede {
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  font-weight: 460;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.fm-body {
+  font-size: clamp(1rem, 1.08vw, 1.1rem);
+  line-height: 1.72;
+  letter-spacing: -0.008em;
+  text-wrap: pretty;
+}
+
+.fm-meta {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.fm-figure {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fm-section {
+  padding-block: clamp(5.5rem, 10vw, 9.5rem);
+}
+
+/* Text link used for secondary actions: underline sits on the baseline grid. */
+.fm-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color 0.25s ease, color 0.25s ease;
+}
+
+/* Hero mark: the broken circle from the logo, drawn once on load. */
+/* Stroke width is in viewBox units (the ring is drawn in a 100-unit box), so
+   each breakpoint sets the value that lands at roughly one screen pixel. */
+.fm-ring-arc {
+  stroke-width: var(--ring-stroke, 0.2);
+}
+
+@keyframes fm-ring-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fm-stem-drop {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+.fm-ring-arc {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: fm-ring-draw 1.9s cubic-bezier(0.65, 0, 0.35, 1) 0.65s forwards;
+}
+
+.fm-ring-stem {
+  transform-origin: top;
+  transform: scaleY(0);
+  animation: fm-stem-drop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 2.45s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fm-ring-arc {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .fm-ring-stem {
+    animation: none;
+    transform: none;
+  }
+}
