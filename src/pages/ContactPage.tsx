@@ -347,11 +347,11 @@ export function ContactPage() {
                           className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors bg-white"
                         >
                           <option value="">Select budget range</option>
-                          <option value="under-50k">Under R50,000</option>
+                          {/* Bands follow the published plan prices on /pricing. */}
+                          <option value="under-20k">Under R20,000</option>
+                          <option value="20k-50k">R20,000 - R50,000</option>
                           <option value="50k-100k">R50,000 - R100,000</option>
-                          <option value="100k-250k">R100,000 - R250,000</option>
-                          <option value="250k-500k">R250,000 - R500,000</option>
-                          <option value="over-500k">Over R500,000</option>
+                          <option value="over-100k">Over R100,000</option>
                         </select>
                       </div>
                     </div>
