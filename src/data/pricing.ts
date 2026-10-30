@@ -1,8 +1,8 @@
 // Pricing page content. Every plan, price and comparison row lives here so the
 // page component never needs editing to change an offer.
 //
-// DRAFT: tiers, prices and inclusions are proposals awaiting Fouad's sign-off.
-// Do not merge to main until they are confirmed.
+// Prices are "from" figures; final fees are confirmed in a written scope.
+// Approved by Fouad, 30 October 2026.
 
 export type CellValue = boolean | string;
 

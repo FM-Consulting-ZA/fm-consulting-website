@@ -157,7 +157,7 @@ export function WhyFMPage() {
                   { aspect: "Execution Support", agency: "Yes", consultancy: "Minimal", fm: "Full Support" },
                   { aspect: "Commercial Focus", agency: "Activity-based", consultancy: "Theory-heavy", fm: "Outcome-driven" },
                   { aspect: "Data & Analytics", agency: "Basic reporting", consultancy: "Complex models", fm: "Actionable insights" },
-                  { aspect: "Pricing Model", agency: "Retainer + % spend", consultancy: "Day rates", fm: "Value-based" },
+                  { aspect: "Pricing Model", agency: "Retainer + % spend", consultancy: "Day rates", fm: "Published from-prices, fixed scope" },
                   { aspect: "Accessibility", agency: "High", consultancy: "Low", fm: "Premium but accessible" },
                 ].map((row, index) => (
                   <tr key={index} className="border-b border-exvia-border">
