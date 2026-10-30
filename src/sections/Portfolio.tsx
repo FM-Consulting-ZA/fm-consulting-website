@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils';
 import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { portfolioConfig } from '@/config';
+import { workEnabled } from '@/data/work';
 import { ParallaxImage } from '@/components/motion/ParallaxImage';
 import { TextReveal } from '@/components/motion/Reveal';
 
@@ -192,10 +194,17 @@ export function Portfolio() {
             )}
             style={{ transitionDelay: '600ms' }}
           >
-            <button className="group inline-flex items-center gap-2 text-sm font-geist-mono text-exvia-black hover:text-exvia-black/70 transition-colors">
-              <span>{portfolioConfig.viewAllLabel}</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+            {workEnabled ? (
+              <Link to="/work" className="group inline-flex items-center gap-2 text-sm font-geist-mono text-exvia-black hover:text-exvia-black/70 transition-colors">
+                <span>See the work</span>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            ) : (
+              <button className="group inline-flex items-center gap-2 text-sm font-geist-mono text-exvia-black hover:text-exvia-black/70 transition-colors">
+                <span>{portfolioConfig.viewAllLabel}</span>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </button>
+            )}
           </div>
         )}
       </div>
