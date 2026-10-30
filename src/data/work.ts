@@ -79,15 +79,16 @@ export const workProjects: WorkProject[] = [
     kind: 'concept',
     sector: 'Direct-to-consumer',
     year: '2026',
-    summary: 'A direct-to-consumer store concept built as a working Shopify storefront.',
+    summary: 'A direct-to-consumer store concept for a dissolvable nicotine strip brand, built as a working Shopify storefront.',
     credit: 'Delivered through Marketing Lab Solutions',
     url: 'https://nion-d2c-mock.myshopify.com',
-    // Shopify storefronts refuse to load inside other sites. Record a
-    // scroll-through, save it as /public/work/nion.mp4, then switch to 'video'.
+    // Tested 30 Oct 2026: Shopify sends X-Frame-Options DENY and
+    // frame-ancestors 'none', so it cannot be embedded. Record a scroll-through,
+    // save it as /public/work/nion.mp4, then switch to 'video'.
     view: 'link',
     published: false,
     clearance:
-      'Not yet shown to Martin or Marni. Client sees it first, then Martin’s OK. Dev store is likely password-protected.',
+      'Martin approved, 30 Oct 2026. Store is public. Waiting on the recording (or publish now as a new-tab link).',
   },
   {
     slug: 'lobster-tavern',
@@ -103,7 +104,7 @@ export const workProjects: WorkProject[] = [
     // frame-ancestors and switch back to 'embed'.
     view: 'video',
     published: false,
-    clearance: 'Live client site: confirm Lobster Tavern is happy to be shown. Needs the recording first.',
+    clearance: 'Lobster Tavern approved, 30 Oct 2026. Waiting on the recording or a frame-ancestors change.',
   },
   {
     slug: 'thynkverse',
@@ -116,8 +117,8 @@ export const workProjects: WorkProject[] = [
     // Tested 30 Oct 2026: embeds cleanly.
     url: 'https://www.thynkverse.co.za',
     view: 'embed',
-    published: false,
-    clearance: 'Stan to agree to Thynkverse appearing on the FM site.',
+    published: true,
+    clearance: 'Stan approved, 30 Oct 2026.',
   },
   {
     slug: 'chapmans-peak',
