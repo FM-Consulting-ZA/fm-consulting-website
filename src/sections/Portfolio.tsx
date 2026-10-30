@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { portfolioConfig } from '@/config';
+import { workEnabled } from '@/data/work';
 import { Section } from '@/components/layout/Section';
 
 /*
@@ -39,6 +41,15 @@ export function Portfolio() {
           ))}
         </tbody>
       </table>
+
+      {workEnabled && (
+        <Link
+          to="/work"
+          className="fm-link inline-block mt-12 text-base text-fm-ink decoration-fm-silver hover:decoration-fm-ink"
+        >
+          See the work
+        </Link>
+      )}
     </Section>
   );
 }
