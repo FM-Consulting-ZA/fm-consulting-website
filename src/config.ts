@@ -70,6 +70,7 @@ export const navigationConfig: NavigationConfig = {
     { label: "Services", href: "/services" },
     { label: "Industries", href: "/industries" },
     { label: "Why FM", href: "/why-fm" },
+    { label: "Pricing", href: "/pricing" },
     { label: "Insights", href: "/insights" },
   ],
   contactLabel: "Book Consultation",

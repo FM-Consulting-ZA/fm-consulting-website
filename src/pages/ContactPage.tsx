@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { contactConfig } from '@/config';
+import { pricingConfig } from '@/data/pricing';
 import { trackContactFormStart, trackEvent, trackLead } from '@/lib/analytics';
 import { Mail, Phone, MapPin, Clock, Send, Check } from 'lucide-react';
 
@@ -13,6 +14,9 @@ export function ContactPage() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const formStarted = useRef(false);
+  // Arriving from a pricing CTA (/contact?plan=<id>) starts the message for them.
+  const [searchParams] = useSearchParams();
+  const chosenPlan = pricingConfig.plans.find((p) => p.id === searchParams.get('plan'));
 
   // First interaction with the form, so the funnel reads
   // CTA click → form start → lead.
@@ -27,7 +31,7 @@ export function ContactPage() {
     email: '',
     phone: '',
     service: '',
-    message: '',
+    message: chosenPlan ? `I'm interested in the ${chosenPlan.name} plan.` : '',
     budget: ''
   });
 
