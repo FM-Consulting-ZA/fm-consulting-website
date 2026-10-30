@@ -4,9 +4,8 @@ import { openConsentPreferences } from '@/lib/analytics';
 import { BrandLogo } from '@/components/BrandLogo';
 
 /*
- * Three zones and a bottom bar. The page links are the largest thing in the
- * footer so the eye has one place to land; contact details and legal links
- * sit underneath at a quieter size.
+ * The mark and one line, how to reach us, and a bottom bar for the legal
+ * small print. Page links live in the navigation, not here.
  */
 const linkQuiet =
   'text-fm-paper/65 hover:text-fm-paper transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fm-paper';
@@ -31,22 +30,8 @@ export function Footer() {
           </div>
 
           <div className="col-span-12 lg:col-span-9">
-            <nav aria-label="Footer">
-              <ul className="flex flex-wrap gap-x-8 gap-y-3">
-                {footerConfig.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      to={link.href}
-                      className="fm-display-3 text-fm-paper hover:text-fm-paper/60 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fm-paper"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
 
-            <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-3 fm-body">
+            <ul className="flex flex-wrap gap-x-8 gap-y-3 fm-body lg:pt-2">
               <li>
                 <a href={`mailto:${contactConfig.contactInfo.email}`} className={linkQuiet}>
                   {contactConfig.contactInfo.email}

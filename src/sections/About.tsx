@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { aboutConfig } from '@/config';
 import { Section } from '@/components/layout/Section';
 
@@ -32,12 +31,6 @@ export function About() {
         ))}
       </dl>
 
-      <Link
-        to="/about"
-        className="fm-link inline-block mt-12 text-base text-fm-ink decoration-fm-silver hover:decoration-fm-ink"
-      >
-        More about FM Consulting
-      </Link>
     </Section>
   );
 }

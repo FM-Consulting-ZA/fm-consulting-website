@@ -353,8 +353,8 @@ export const ctaConfig: CTAConfig = {
   email: "info@fmconsultingza.co.za",
 };
 
-// Footer section configuration. Three zones only: the mark and one line,
-// the page links, and how to reach us. Legal links sit in the bottom bar.
+// Footer section configuration: the mark and one line, how to reach us, and
+// the legal links in the bottom bar. Page links live in the navigation only.
 export interface SocialLink {
   iconName: string;
   href: string;
@@ -363,22 +363,12 @@ export interface SocialLink {
 
 export interface FooterConfig {
   tagline: string;
-  links: { label: string; href: string }[];
   socialLinks: SocialLink[];
   copyright: string;
 }
 
 export const footerConfig: FooterConfig = {
   tagline: "Strategy. Execution. Results.",
-  links: [
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Pricing", href: "/pricing" },
-    { label: "Industries", href: "/industries" },
-    { label: "Why FM", href: "/why-fm" },
-    { label: "Insights", href: "/insights" },
-    { label: "Contact", href: "/contact" },
-  ],
   // Official business profiles. An entry with an empty href is not rendered,
   // so a profile can be added here the moment its URL exists.
   socialLinks: [
