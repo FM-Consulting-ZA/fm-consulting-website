@@ -69,7 +69,9 @@ export function SiteViewer({ project, onClose }: { project: WorkProject | null; 
                   </span>
                 </div>
 
-                {project.view === 'embed' ? (
+                {/* Always a grid cell, so Close stays right when the toggle is hidden on phones */}
+                <div className="flex justify-center">
+                {project.view === 'embed' && (
                   <div role="group" aria-label="Preview size" className="hidden md:flex items-center gap-1 rounded-full border border-white/15 p-1">
                     {DEVICES.map(({ id, label, Icon }) => (
                       <button
@@ -87,9 +89,8 @@ export function SiteViewer({ project, onClose }: { project: WorkProject | null; 
                       </button>
                     ))}
                   </div>
-                ) : (
-                  <span />
                 )}
+                </div>
 
                 <div className="flex items-center justify-end gap-2">
                   {project.url && (
