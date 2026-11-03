@@ -11,6 +11,8 @@ import { ArrowUpRight, Check, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AnimatedButton } from '@/components/AnimatedButton';
 import { Reveal } from '@/components/motion/Reveal';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { Section } from '@/components/layout/Section';
 import { pricingConfig, type CellValue, type PricingPlan } from '@/data/pricing';
 
 /*
@@ -184,7 +186,7 @@ function DesktopCompare() {
       {/* Plan cards: same grid as the table below */}
       <div ref={cardsRef} className={GRID}>
         <div className="pr-8 pb-8 flex flex-col justify-end">
-          <h2 className="text-3xl font-semibold tracking-tight text-fm-ink">{compareHeading}</h2>
+          <h2 className="fm-display-3 text-fm-ink">{compareHeading}</h2>
           <p className="mt-3 text-sm leading-relaxed text-fm-graphite max-w-[16rem]">{compareIntro}</p>
         </div>
         {plans.map((plan, i) => (
@@ -350,7 +352,7 @@ function MobileCompare() {
       </div>
 
       <div className="mt-20">
-        <h2 className="text-3xl font-semibold tracking-tight text-fm-ink">{compareHeading}</h2>
+        <h2 className="fm-display-3 text-fm-ink">{compareHeading}</h2>
         <p className="mt-3 text-sm leading-relaxed text-fm-graphite">{compareIntro}</p>
       </div>
 
@@ -429,24 +431,10 @@ export function PricingPage() {
   const { label, heading, intro, footnotes } = pricingConfig;
 
   return (
-    <div className="w-full pt-24 lg:pt-32 bg-white">
-      <section className="w-full pb-16 lg:pb-20">
-        <div className="container-large px-6 lg:px-12">
-          <Reveal y={16}>
-            <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">{label}</span>
-          </Reveal>
-          <Reveal delay={0.08} y={20}>
-            <h1 className="mt-6 max-w-4xl text-4xl lg:text-6xl font-semibold leading-tight tracking-tight text-fm-ink">
-              {heading}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.16} y={20}>
-            <p className="mt-6 max-w-2xl text-lg lg:text-xl leading-relaxed text-fm-graphite">{intro}</p>
-          </Reveal>
-        </div>
-      </section>
+    <div className="w-full">
+      <PageHeader label={label} title={heading} intro={intro} />
 
-      <section className="w-full pb-24 lg:pb-32">
+      <section className="w-full bg-white pt-16 lg:pt-24 pb-24 lg:pb-32">
         <div className="container-large px-6 lg:px-12">
           <DesktopCompare />
           <MobileCompare />
@@ -462,20 +450,23 @@ export function PricingPage() {
         </div>
       </section>
 
-      <section className="w-full bg-fm-ink text-white">
-        <div className="container-large px-6 lg:px-12 py-20 lg:py-28 flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl lg:text-5xl font-semibold tracking-tight leading-tight">Not sure which fits?</h2>
-            <p className="mt-4 text-lg leading-relaxed text-white/70">
-              Book a 30-minute call. We will look at where growth is stuck and tell you which engagement makes sense,
-              including when none of them do.
-            </p>
-          </div>
-          <AnimatedButton to="/contact" variant="outline-white" size="lg" showIcon>
-            Book a call
-          </AnimatedButton>
-        </div>
-      </section>
+      <Section
+        tone="ink"
+        compact
+        label="Not sure?"
+        heading="Not sure which fits?"
+        intro={
+          <p>
+            Book a 30-minute call. We will look at where growth is stuck and tell you which engagement makes sense,
+            including when none of them do.
+          </p>
+        }
+        className="pb-0 lg:pb-0"
+      >
+        <AnimatedButton to="/contact" variant="secondary" size="lg" className="border-fm-paper">
+          Book a call
+        </AnimatedButton>
+      </Section>
     </div>
   );
 }
