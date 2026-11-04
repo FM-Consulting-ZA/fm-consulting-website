@@ -54,6 +54,10 @@ export const siteConfig: SiteConfig = {
 export interface NavLink {
   label: string;
   href: string;
+  /** One line under the link in the open menu. */
+  note?: string;
+  /** Also shown in the bar itself, not only in the menu. */
+  inBar?: boolean;
 }
 
 export interface NavigationConfig {
@@ -65,16 +69,17 @@ export interface NavigationConfig {
 
 export const navigationConfig: NavigationConfig = {
   logo: "FM Consulting",
+  // Every page lives in the menu. Only the `inBar` links also sit in the bar.
   links: [
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Industries", href: "/industries" },
+    { label: "About", href: "/about", note: "Who we are and how we work", inBar: true },
+    { label: "Services", href: "/services", note: "Six disciplines, one growth system" },
+    { label: "Industries", href: "/industries", note: "The sectors we know" },
     // Appears once at least one project on /work is published (see src/data/work.ts).
-    ...(workEnabled ? [{ label: "Work", href: "/work" }] : []),
-    { label: "Why FM", href: "/why-fm" },
-    { label: "Engagements", href: "/pricing" },
-    { label: "Playbook", href: "/playbooks" },
-    { label: "Insights", href: "/insights" },
+    ...(workEnabled ? [{ label: "Work", href: "/work", note: "Sites and systems we have built" }] : []),
+    { label: "Why FM", href: "/why-fm", note: "What you can hold us to", inBar: true },
+    { label: "Engagements", href: "/pricing", note: "Four ways to work with us", inBar: true },
+    { label: "Playbook", href: "/playbooks", note: "Find the leak in your own numbers" },
+    { label: "Insights", href: "/insights", note: "Articles and notes" },
   ],
   contactLabel: "Book a consultation",
   contactHref: "/contact",

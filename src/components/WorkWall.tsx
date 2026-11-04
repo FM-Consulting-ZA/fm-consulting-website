@@ -145,7 +145,7 @@ function TileBody({ tile }: { tile: Exclude<Tile, { kind: 'centre' }> }) {
     case 'ring':
       return (
         <div className={cn('relative flex h-full items-center justify-center', tones[tile.tone])}>
-          <BrokenCircle className="h-[52%] aspect-square text-fm-ink" />
+          <BrokenCircle className="h-[52%] aspect-square text-fm-ink [--ring-stroke:1]" stem={false} />
         </div>
       );
   }
