@@ -884,7 +884,7 @@ function HowItWorks({ onStart }: { onStart: () => void }) {
       intro={<p>Nothing is sent anywhere unless you ask for the report at the end.</p>}
       wide
     >
-      <div className="hidden md:grid grid-cols-12 gap-x-6 mb-16 lg:mb-24">
+      <div className="grid grid-cols-12 gap-x-6 mb-16 lg:mb-24">
         <div className="col-span-12 lg:col-start-4 lg:col-span-9">
           <BrandFilm {...findTheLeakFilm} placement="playbook" />
         </div>

@@ -8,7 +8,8 @@ import { cn } from '@/lib/utils';
  * only when it is on screen. It starts muted once half of it is in view,
  * plays once and holds on the end card. Sound is one tap away. With reduced
  * motion, or where the browser blocks autoplay, it waits on a still until
- * someone presses play.
+ * someone presses play. Phones get the 4:5 cut, set larger for a small
+ * screen, when one is supplied.
  */
 
 interface BrandFilmProps {
@@ -21,16 +22,21 @@ interface BrandFilmProps {
   duration: string;
   /** Where the film sits, for analytics. */
   placement: string;
+  /** A 4:5 cut for phones (under 768 px wide). */
+  portrait?: { src: string; poster: string };
   className?: string;
 }
 
 type State = 'waiting' | 'playing' | 'paused' | 'ended';
 
-export function BrandFilm({ src, poster, description, title, duration, placement, className }: BrandFilmProps) {
+export function BrandFilm({ src, poster, description, title, duration, placement, portrait, className }: BrandFilmProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [state, setState] = useState<State>('waiting');
   const [muted, setMuted] = useState(true);
   const [reduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  // Chosen once on load; a phone does not cross the breakpoint mid-film.
+  const [tall] = useState(() => !!portrait && window.matchMedia('(max-width: 767px)').matches);
+  const file = tall && portrait ? portrait : { src, poster };
   // Show the still over the first frame: with reduced motion, or once autoplay is refused.
   const [still, setStill] = useState(reduced);
   const autoTried = useRef(false);
@@ -109,11 +115,11 @@ export function BrandFilm({ src, poster, description, title, duration, placement
 
   return (
     <figure className={cn('w-full', className)}>
-      <div className="group relative aspect-video w-full overflow-hidden bg-fm-paper">
+      <div className={cn('group relative w-full overflow-hidden bg-fm-paper', tall ? 'aspect-[4/5]' : 'aspect-video')}>
         <video
           ref={ref}
           className="absolute inset-0 h-full w-full"
-          src={src}
+          src={file.src}
           muted
           playsInline
           preload="metadata"
@@ -122,11 +128,11 @@ export function BrandFilm({ src, poster, description, title, duration, placement
           onPause={(e) => setState(e.currentTarget.ended ? 'ended' : 'paused')}
           onEnded={() => {
             setState('ended');
-            trackEvent('film_complete', { film: title, placement });
+            trackEvent('film_complete', { film: title, placement, cut: tall ? '4x5' : '16x9' });
           }}
         />
         {still && (
-          <img src={poster} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={file.poster} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
         )}
 
         {/* Before anything has played: one clear way in, with sound. */}
