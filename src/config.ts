@@ -72,7 +72,7 @@ export const navigationConfig: NavigationConfig = {
     // Appears once at least one project on /work is published (see src/data/work.ts).
     ...(workEnabled ? [{ label: "Work", href: "/work" }] : []),
     { label: "Why FM", href: "/why-fm" },
-    { label: "Pricing", href: "/pricing" },
+    { label: "Engagements", href: "/pricing" },
     { label: "Insights", href: "/insights" },
   ],
   contactLabel: "Book a consultation",
@@ -94,7 +94,7 @@ export const heroConfig: HeroConfig = {
   lede: "FM Consulting finds where growth is leaking, fixes it, and builds the system that keeps it fixed: acquisition, conversion, retention and reporting tied back to revenue.",
   primaryCta: "Book a consultation",
   primaryHref: "/contact",
-  secondaryCta: "See pricing",
+  secondaryCta: "Ways to work with us",
   secondaryHref: "/pricing",
 };
 
@@ -124,11 +124,13 @@ export const aboutConfig: AboutConfig = {
   heading: "Senior strategy without the agency overhead.",
   description: "FM Consulting is a South African business growth consultancy that operates at the intersection of strategy, data, and execution. We help SMEs, founder-led businesses, and established companies transform their commercial performance through disciplined, measurable approaches to growth. We do not chase vanity metrics. We build systems that improve efficiency, profitability, and long-term business performance.",
   experienceValue: "15+",
-  experienceLabel: "Years of\nCombined Experience",
+  experienceLabel: "Years in growth and\nperformance marketing",
+  // Only claims FM can evidence. Outcome figures (revenue influenced,
+  // retention rates, ROI) stay off the site until they can be sourced.
   stats: [
-    { value: "25+", label: "Businesses\nAdvised" },
-    { value: "R750M+", label: "Client Revenue\nInfluenced" },
-    { value: "75%", label: "Client\nRetention" },
+    { value: "25+", label: "Businesses\nadvised" },
+    { value: "2021", label: "Longest client relationship,\nstill running" },
+    { value: "24h", label: "Response to\nevery enquiry" },
   ],
   images: [
     { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80", alt: "Strategic planning session" },
@@ -579,10 +581,11 @@ export const whyFMConfig: WhyFMConfig = {
       iconName: "Settings",
     },
   ],
+  // Commitments FM controls and writes into every engagement, not averages.
   stats: [
-    { value: "2.5x", label: "Average ROI\nDelivered" },
-    { value: "92%", label: "Client\nSatisfaction" },
-    { value: "12", label: "Weeks Average\nTo First Results" },
+    { value: "2 weeks", label: "From first session to\na diagnostic readout" },
+    { value: "1", label: "Senior strategist on every\nengagement, no hand-offs" },
+    { value: "24h", label: "Response to\nevery enquiry" },
   ],
 };
 

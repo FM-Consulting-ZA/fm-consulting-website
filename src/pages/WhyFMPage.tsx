@@ -11,7 +11,7 @@ const comparison = [
   { aspect: 'Execution support', agency: 'Yes', consultancy: 'Minimal', fm: 'Full support' },
   { aspect: 'Commercial focus', agency: 'Activity-based', consultancy: 'Theory-heavy', fm: 'Outcome-driven' },
   { aspect: 'Data and analytics', agency: 'Basic reporting', consultancy: 'Complex models', fm: 'Actionable insight' },
-  { aspect: 'Pricing model', agency: 'Retainer plus % of spend', consultancy: 'Day rates', fm: 'Published from-prices, fixed scope' },
+  { aspect: 'Pricing model', agency: 'Retainer plus % of spend', consultancy: 'Day rates', fm: 'Fixed fee or retainer, scoped in writing' },
   { aspect: 'Accessibility', agency: 'High', consultancy: 'Low', fm: 'Premium but accessible' },
 ];
 
@@ -43,9 +43,9 @@ export function WhyFMPage() {
       {whyFMConfig.stats.length > 0 && (
         <Section
           tone="paper"
-          label="Results"
-          heading="We measure success by yours."
-          intro={<p>Every engagement is set up to deliver measurable commercial outcomes. These are client averages.</p>}
+          label="Commitments"
+          heading="What you can hold us to."
+          intro={<p>Not averages or projections. These are written into every engagement, whatever its size.</p>}
         >
           <dl className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10 border-t border-fm-silver pt-8">
             {whyFMConfig.stats.map((stat) => (

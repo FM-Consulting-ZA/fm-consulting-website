@@ -19,7 +19,7 @@ import { pricingConfig, type CellValue, type PricingPlan } from '@/data/pricing'
  * Pricing page modelled on the Shopify plan comparison pattern:
  * four plan cards sit directly above a comparison table that shares their
  * column grid. As the cards scroll up under the navigation they fade out and
- * a condensed header (plan, price, action) slides in and pins to the top of
+ * a condensed header (plan, term, action) slides in and pins to the top of
  * the table until the table ends. Scroll-linked, so it tracks the wheel 1:1.
  */
 
@@ -134,12 +134,11 @@ function PlanCard({ plan, className }: { plan: PricingPlan; className?: string }
       <p className="mt-2 text-sm leading-relaxed text-fm-graphite lg:min-h-[2.75rem]">{plan.tagline}</p>
 
       <div className="mt-6 lg:mt-8">
-        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fm-graphite">{plan.pricePrefix}</span>
-        <div className="mt-1 flex items-baseline gap-2 flex-wrap">
-          <span className="font-mono text-[2rem] leading-none tracking-tight text-fm-ink">{plan.price}</span>
-          <span className="text-sm text-fm-graphite">{plan.priceSuffix}</span>
+        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fm-graphite">{plan.basis}</span>
+        <div className="mt-1">
+          <span className="font-mono text-[2rem] leading-none tracking-tight text-fm-ink">{plan.lead}</span>
         </div>
-        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-fm-graphite">{plan.priceNote}</p>
+        <p className="mt-3 text-sm text-fm-graphite">{plan.note}</p>
       </div>
 
       <div className="mt-auto pt-6 lg:pt-8">
@@ -227,7 +226,7 @@ function DesktopCompare() {
                     <span className="hidden xl:inline">{plan.name}</span>
                   </p>
                   <p className="mt-1 font-mono text-[12px] text-fm-graphite whitespace-nowrap">
-                    {plan.price} <span className="hidden xl:inline text-fm-graphite/80">{plan.priceSuffix}</span>
+                    {plan.lead}
                   </p>
                 </div>
                 <Link
@@ -378,7 +377,7 @@ function MobileCompare() {
           </div>
           <div className="flex items-center justify-between gap-4 py-3">
             <p className="font-mono text-[12px] text-fm-graphite">
-              {plan.pricePrefix} <span className="text-fm-ink">{plan.price}</span> {plan.priceSuffix}
+              <span className="text-fm-ink">{plan.lead}</span> · {plan.basis.toLowerCase()}
             </p>
             <Link
               to={contactHref(plan)}
