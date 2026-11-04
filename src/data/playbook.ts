@@ -5,7 +5,7 @@
 // Everything here runs in the visitor's browser. Nothing is sent anywhere
 // unless they ask for the emailed leak report.
 //
-// FIRST-LOOK RANGES — FOUAD TO CONFIRM
+// FIRST-LOOK RANGES — approved by Fouad, 4 November 2026
 // The ranges below are working assumptions used to decide where to look
 // first. They are deliberately broad and are not sector benchmarks. The page
 // and the PDF both say so. Change them here; nothing else needs editing.
