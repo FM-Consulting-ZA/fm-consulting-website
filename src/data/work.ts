@@ -87,8 +87,10 @@ export const workProjects: WorkProject[] = [
     // save it as /public/work/nion.mp4, then switch to 'video'.
     // Until then it opens in a new tab.
     view: 'link',
-    published: true,
-    clearance: 'Martin approved, 30 Oct 2026. Store is public. Swap to video once recorded.',
+    // Hidden 4 Nov 2026: the store is behind Shopify's password page, so the
+    // link led visitors to a login screen. Flip back once the store is open.
+    published: false,
+    clearance: 'Martin approved, 30 Oct 2026. Store must be public (no password page) before this goes back on.',
   },
   {
     slug: 'lobster-tavern',
