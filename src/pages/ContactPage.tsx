@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { contactConfig } from '@/config';
 import { pricingConfig } from '@/data/pricing';
+import { PLAYBOOK_SUMMARY_KEY, type PlaybookSummary } from '@/data/playbook';
 import { trackContactFormStart, trackEvent, trackLead } from '@/lib/analytics';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Section } from '@/components/layout/Section';
@@ -17,6 +18,17 @@ export function ContactPage() {
   // Arriving from a pricing CTA (/contact?plan=<id>) starts the message for them.
   const [searchParams] = useSearchParams();
   const chosenPlan = pricingConfig.plans.find((p) => p.id === searchParams.get('plan'));
+  // Arriving from the Growth Playbook (/contact?from=playbook) carries the
+  // visitor's leak summary and details, saved in this browser tab only.
+  const fromPlaybook = (() => {
+    if (searchParams.get('from') !== 'playbook') return null;
+    try {
+      const raw = sessionStorage.getItem(PLAYBOOK_SUMMARY_KEY);
+      return raw ? (JSON.parse(raw) as PlaybookSummary) : null;
+    } catch {
+      return null;
+    }
+  })();
 
   // First interaction with the form, so the funnel reads
   // CTA click → form start → lead.
@@ -26,12 +38,12 @@ export function ContactPage() {
     trackContactFormStart();
   };
   const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
+    name: fromPlaybook?.name ?? '',
+    company: fromPlaybook?.business ?? '',
+    email: fromPlaybook?.email ?? '',
     phone: '',
     service: '',
-    message: chosenPlan ? `I'm interested in the ${chosenPlan.name} plan.` : '',
+    message: fromPlaybook?.message ?? (chosenPlan ? `I'm interested in the ${chosenPlan.name} plan.` : ''),
     budget: ''
   });
 

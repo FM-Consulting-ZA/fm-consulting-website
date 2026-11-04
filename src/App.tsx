@@ -24,6 +24,7 @@ import { InsightsPage } from '@/pages/InsightsPage';
 import { ArticlePage } from '@/pages/ArticlePage';
 import { ContactPage } from '@/pages/ContactPage';
 import { PricingPage } from '@/pages/PricingPage';
+import { PlaybookPage } from '@/pages/PlaybookPage';
 import { WorkPage } from '@/pages/WorkPage';
 import { TermsPage } from '@/pages/legal/TermsPage';
 import { PrivacyPage } from '@/pages/legal/PrivacyPage';
@@ -48,6 +49,7 @@ function AnimatedRoutes() {
         {workEnabled && (
           <Route path="/work/:slug?" element={<PageTransition><WorkPage /></PageTransition>} />
         )}
+        <Route path="/playbooks" element={<PageTransition><Seo title="Growth Playbook" description="Enter six numbers from last month and see where customers drop out, roughly what it costs in rand, and the playbook FM Consulting would follow to fix it." path="/playbooks" /><PlaybookPage /></PageTransition>} />
         <Route path="/insights" element={<PageTransition><Seo title="Insights" description="Practical insights on growth strategy, performance marketing, and business optimisation." path="/insights" /><InsightsPage /></PageTransition>} />
         <Route path="/insights/:slug" element={<PageTransition><ArticlePage /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><Seo title="Contact" description="Book a consultation with FM Consulting. We respond within 24 hours." path="/contact" /><ContactPage /></PageTransition>} />

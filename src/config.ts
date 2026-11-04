@@ -73,6 +73,7 @@ export const navigationConfig: NavigationConfig = {
     ...(workEnabled ? [{ label: "Work", href: "/work" }] : []),
     { label: "Why FM", href: "/why-fm" },
     { label: "Engagements", href: "/pricing" },
+    { label: "Playbook", href: "/playbooks" },
     { label: "Insights", href: "/insights" },
   ],
   contactLabel: "Book a consultation",
