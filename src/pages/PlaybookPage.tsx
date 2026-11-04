@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils';
 import { AnimatedButton } from '@/components/AnimatedButton';
 import { BrokenCircle } from '@/components/BrokenCircle';
 import { Section } from '@/components/layout/Section';
+import { BrandFilm } from '@/components/BrandFilm';
+import { findTheLeakFilm } from '@/data/films';
 import { getLenis } from '@/components/motion/SmoothScroll';
 import { contactConfig } from '@/config';
 import { trackEvent } from '@/lib/analytics';
@@ -882,6 +884,11 @@ function HowItWorks({ onStart }: { onStart: () => void }) {
       intro={<p>Nothing is sent anywhere unless you ask for the report at the end.</p>}
       wide
     >
+      <div className="grid grid-cols-12 gap-x-6 mb-16 lg:mb-24">
+        <div className="col-span-12 lg:col-start-4 lg:col-span-9">
+          <BrandFilm {...findTheLeakFilm} placement="playbook" />
+        </div>
+      </div>
       <ol className="grid md:grid-cols-3 gap-x-6 gap-y-10">
         {steps.map((s, i) => (
           <li key={s.title} className="border-t border-fm-ink pt-5">
