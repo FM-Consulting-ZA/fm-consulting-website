@@ -16,7 +16,8 @@ export function Principle() {
       >
         {viewConfig.linkLabel}
       </Link>
-      <BrandFilm {...findTheLeakFilm} placement="home" className="mt-14 lg:mt-20" />
+      {/* Phones get the vertical cut once it exists; the 16:9 is too small to read there. */}
+      <BrandFilm {...findTheLeakFilm} placement="home" className="mt-14 lg:mt-20 hidden md:block" />
     </Section>
   );
 }
