@@ -48,7 +48,7 @@ export function NewsletterSignup() {
   };
 
   return (
-    <section className="w-full fm-section bg-fm-paper text-fm-ink" aria-labelledby="newsletter-heading">
+    <section className="w-full fm-section bg-white text-fm-ink" aria-labelledby="newsletter-heading">
       <div className="container-large px-6 lg:px-12">
         <div className="grid grid-cols-12 gap-x-6 gap-y-6 border-t border-fm-ink pt-6 lg:pt-8">
           <p className="fm-meta col-span-12 lg:col-span-3 lg:pt-3 text-fm-graphite">Newsletter</p>

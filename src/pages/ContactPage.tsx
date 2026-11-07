@@ -4,11 +4,12 @@ import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { contactConfig } from '@/config';
 import { pricingConfig } from '@/data/pricing';
+import { PLAYBOOK_SUMMARY_KEY, type PlaybookSummary } from '@/data/playbook';
 import { trackContactFormStart, trackEvent, trackLead } from '@/lib/analytics';
-import { Mail, Phone, MapPin, Clock, Send, Check } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { Section } from '@/components/layout/Section';
 
 export function ContactPage() {
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ threshold: 0.2 });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -17,6 +18,17 @@ export function ContactPage() {
   // Arriving from a pricing CTA (/contact?plan=<id>) starts the message for them.
   const [searchParams] = useSearchParams();
   const chosenPlan = pricingConfig.plans.find((p) => p.id === searchParams.get('plan'));
+  // Arriving from the Growth Playbook (/contact?from=playbook) carries the
+  // visitor's leak summary and details, saved in this browser tab only.
+  const fromPlaybook = (() => {
+    if (searchParams.get('from') !== 'playbook') return null;
+    try {
+      const raw = sessionStorage.getItem(PLAYBOOK_SUMMARY_KEY);
+      return raw ? (JSON.parse(raw) as PlaybookSummary) : null;
+    } catch {
+      return null;
+    }
+  })();
 
   // First interaction with the form, so the funnel reads
   // CTA click → form start → lead.
@@ -26,12 +38,12 @@ export function ContactPage() {
     trackContactFormStart();
   };
   const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
+    name: fromPlaybook?.name ?? '',
+    company: fromPlaybook?.business ?? '',
+    email: fromPlaybook?.email ?? '',
     phone: '',
     service: '',
-    message: chosenPlan ? `I'm interested in the ${chosenPlan.name} plan.` : '',
+    message: fromPlaybook?.message ?? (chosenPlan ? `I'm interested in the ${chosenPlan.name} plan.` : ''),
     budget: ''
   });
 
@@ -111,137 +123,43 @@ export function ContactPage() {
   };
 
   return (
-    <div className="w-full pt-24 lg:pt-32">
-      {/* Header Section */}
-      <section className="w-full pb-16 lg:pb-24 bg-white">
+    <div className="w-full">
+      <PageHeader
+        label="Contact"
+        title="Tell us where growth is stuck."
+        intro="Book a consultation and you speak to a senior strategist from the first call. We respond within 24 hours."
+      />
+
+      <section className="w-full fm-section bg-white text-fm-ink" aria-label="Contact form">
         <div className="container-large px-6 lg:px-12">
-          <div ref={headerRef} className="max-w-4xl">
-            <div
-              className={cn(
-                'transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              )}
-            >
-              <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-                Contact
-              </span>
-            </div>
-            <h1
-              className={cn(
-                'text-4xl lg:text-6xl font-semibold text-exvia-black mt-6 leading-tight transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '100ms' }}
-            >
-              Let's Discuss Your Growth Goals
-            </h1>
-            <p
-              className={cn(
-                'text-xl lg:text-2xl text-exvia-black/70 mt-6 leading-relaxed transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '200ms' }}
-            >
-              Ready to improve your business performance? Book a consultation with our team. 
-              We'll explore your challenges, identify opportunities, and outline how we can help.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-subtle/30">
-        <div className="container-large px-6 lg:px-12">
-          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-            {/* Contact Info */}
-            <div className="lg:col-span-2">
-              <div className="sticky top-32">
-                <h2 className="text-2xl font-semibold text-exvia-black mb-6">
-                  Get in Touch
-                </h2>
-                <p className="text-exvia-black/70 mb-8">
-                  Fill out the form and we'll respond within 24 hours. For urgent inquiries, 
-                  feel free to call us directly.
-                </p>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 flex items-center justify-center border border-exvia-border rounded-lg bg-white flex-shrink-0">
-                      <Mail className="w-5 h-5 text-exvia-black" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-exvia-black">Email</div>
-                      <a href={`mailto:${contactConfig.contactInfo.email}`} className="text-exvia-black/70 hover:text-exvia-black transition-colors">
-                        {contactConfig.contactInfo.email}
-                      </a>
-                    </div>
+          <div className="grid grid-cols-12 gap-x-6 gap-y-12 border-t border-fm-ink pt-6 lg:pt-8">
+            <div className="col-span-12 lg:col-span-3">
+              <p className="fm-meta text-fm-graphite lg:pt-3">Details</p>
+              <div className="mt-6">
+              <dl className="border-t border-fm-ink">
+                {[
+                  { term: 'Email', value: <a href={`mailto:${contactConfig.contactInfo.email}`} className="fm-link decoration-fm-silver hover:decoration-fm-ink">{contactConfig.contactInfo.email}</a> },
+                  { term: 'Phone', value: <a href={`tel:${contactConfig.contactInfo.phone.replace(/[^+\d]/g, '')}`} className="fm-link decoration-fm-silver hover:decoration-fm-ink">{contactConfig.contactInfo.phone}</a> },
+                  { term: 'Location', value: contactConfig.contactInfo.address },
+                  { term: 'Hours', value: contactConfig.contactInfo.hours },
+                ].map((row) => (
+                  <div key={row.term} className="py-4 border-b border-fm-silver">
+                    <dt className="fm-meta text-fm-graphite">{row.term}</dt>
+                    <dd className="mt-2 fm-body text-fm-ink">{row.value}</dd>
                   </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 flex items-center justify-center border border-exvia-border rounded-lg bg-white flex-shrink-0">
-                      <Phone className="w-5 h-5 text-exvia-black" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-exvia-black">Phone</div>
-                      <a href={`tel:${contactConfig.contactInfo.phone}`} className="text-exvia-black/70 hover:text-exvia-black transition-colors">
-                        {contactConfig.contactInfo.phone}
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 flex items-center justify-center border border-exvia-border rounded-lg bg-white flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-exvia-black" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-exvia-black">Location</div>
-                      <div className="text-exvia-black/70">{contactConfig.contactInfo.address}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 flex items-center justify-center border border-exvia-border rounded-lg bg-white flex-shrink-0">
-                      <Clock className="w-5 h-5 text-exvia-black" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-exvia-black">Business Hours</div>
-                      <div className="text-exvia-black/70">{contactConfig.contactInfo.hours}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Response Expectation */}
-                <div className="mt-8 p-4 bg-white border border-exvia-border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center bg-exvia-black rounded-full">
-                      <Check className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-exvia-black">Fast Response</div>
-                      <div className="text-sm text-exvia-black/60">We typically respond within 24 hours</div>
-                    </div>
-                  </div>
-                </div>
+                ))}
+              </dl>
               </div>
             </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-3" ref={formRef}>
-              <div
-                className={cn(
-                  'bg-white border border-exvia-border rounded-lg p-8 lg:p-10 transition-all duration-800 ease-out-quart',
-                  formVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                )}
-              >
+            <div className="col-span-12 lg:col-start-5 lg:col-span-8" ref={formRef}>
+              <div className={cn('transition-opacity duration-700', formVisible ? 'opacity-100' : 'opacity-0')}>
                 {submitted ? (
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-exvia-black rounded-full">
-                      <Check className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-semibold text-exvia-black mb-3">
-                      Thank You!
+                  <div className="py-6" role="status">
+                                        <h3 className="fm-display-2 text-fm-ink mb-4">
+                      Message received.
                     </h3>
-                    <p className="text-exvia-black/70">
+                    <p className="fm-body text-fm-graphite">
                       We've received your message and will get back to you within 24 hours.
                     </p>
                   </div>
@@ -249,7 +167,7 @@ export function ContactPage() {
                   <form onSubmit={handleSubmit} onFocus={handleFormFocus} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-exvia-black mb-2">
+                        <label htmlFor="name" className="block text-sm font-medium text-fm-ink mb-2">
                           Full Name *
                         </label>
                         <input
@@ -259,12 +177,12 @@ export function ContactPage() {
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors"
+                          className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors"
                           placeholder="John Smith"
                         />
                       </div>
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-exvia-black mb-2">
+                        <label htmlFor="company" className="block text-sm font-medium text-fm-ink mb-2">
                           Company Name *
                         </label>
                         <input
@@ -274,7 +192,7 @@ export function ContactPage() {
                           required
                           value={formData.company}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors"
+                          className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors"
                           placeholder="Your Company"
                         />
                       </div>
@@ -282,7 +200,7 @@ export function ContactPage() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-exvia-black mb-2">
+                        <label htmlFor="email" className="block text-sm font-medium text-fm-ink mb-2">
                           Email Address *
                         </label>
                         <input
@@ -292,12 +210,12 @@ export function ContactPage() {
                           required
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors"
+                          className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors"
                           placeholder="john@company.com"
                         />
                       </div>
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-exvia-black mb-2">
+                        <label htmlFor="phone" className="block text-sm font-medium text-fm-ink mb-2">
                           Phone Number
                         </label>
                         <input
@@ -306,7 +224,7 @@ export function ContactPage() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors"
+                          className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors"
                           placeholder="+27 21 555 0123"
                         />
                       </div>
@@ -314,7 +232,7 @@ export function ContactPage() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="service" className="block text-sm font-medium text-exvia-black mb-2">
+                        <label htmlFor="service" className="block text-sm font-medium text-fm-ink mb-2">
                           Service Required *
                         </label>
                         <select
@@ -323,7 +241,7 @@ export function ContactPage() {
                           required
                           value={formData.service}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors bg-white"
+                          className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors bg-white"
                         >
                           <option value="">Select a service</option>
                           <option value="growth-strategy">Growth Strategy</option>
@@ -336,7 +254,7 @@ export function ContactPage() {
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="budget" className="block text-sm font-medium text-exvia-black mb-2">
+                        <label htmlFor="budget" className="block text-sm font-medium text-fm-ink mb-2">
                           Estimated Budget Range
                         </label>
                         <select
@@ -344,7 +262,7 @@ export function ContactPage() {
                           name="budget"
                           value={formData.budget}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors bg-white"
+                          className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors bg-white"
                         >
                           <option value="">Select budget range</option>
                           {/* Bands follow the published plan prices on /pricing. */}
@@ -357,7 +275,7 @@ export function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-exvia-black mb-2">
+                      <label htmlFor="message" className="block text-sm font-medium text-fm-ink mb-2">
                         Tell us about your business goals *
                       </label>
                       <textarea
@@ -367,7 +285,7 @@ export function ContactPage() {
                         rows={5}
                         value={formData.message}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-exvia-border rounded-lg focus:outline-none focus:border-exvia-black transition-colors resize-none"
+                        className="w-full px-4 py-3 bg-white border border-fm-silver focus:outline-none focus:border-fm-ink transition-colors resize-none"
                         placeholder="What challenges are you facing? What are your growth objectives?"
                       />
                     </div>
@@ -384,13 +302,13 @@ export function ContactPage() {
                     <button
                       type="submit"
                       disabled={sending}
-                      className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-exvia-black text-white font-medium rounded-lg hover:bg-exvia-black/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-fm-ink text-fm-paper font-geist-mono text-sm hover:bg-black transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <Send className="w-4 h-4" />
+                      
                       {sending ? 'Sending…' : 'Send Message'}
                     </button>
 
-                    <p className="text-sm text-exvia-black/50 text-center">
+                    <p className="text-sm text-fm-graphite">
                       We use your details only to respond to your enquiry. See our{' '}
                       <Link to="/privacy" className="underline underline-offset-4 hover:text-exvia-black">
                         Privacy Policy
@@ -405,47 +323,21 @@ export function ContactPage() {
         </div>
       </section>
 
-      {/* Consultation Info */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-black text-white">
-        <div className="container-large px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-semibold">
-              What to Expect from Your Consultation
-            </h2>
-            <p className="text-white/70 mt-4 text-lg">
-              A focused conversation about your business, your challenges, and your growth opportunities.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              {[
-                {
-                  step: "01",
-                  title: "Discovery",
-                  description: "We'll discuss your business model, current performance, and growth objectives."
-                },
-                {
-                  step: "02",
-                  title: "Diagnosis",
-                  description: "We'll identify the biggest opportunities and bottlenecks in your growth system."
-                },
-                {
-                  step: "03",
-                  title: "Direction",
-                  description: "We'll outline how FM Consulting can help you achieve your goals."
-                }
-              ].map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center border border-white/30 rounded-full">
-                    <span className="text-sm font-geist-mono">{item.step}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-white/60">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <Section tone="paper" label="What happens next" heading="Three steps after you get in touch." wide>
+        <ol className="grid md:grid-cols-3 gap-x-6 gap-y-10">
+          {[
+            { step: '01', title: 'Discovery', description: "We discuss your business model, current performance and growth objectives." },
+            { step: '02', title: 'Diagnosis', description: 'We identify the biggest opportunities and bottlenecks in your growth system.' },
+            { step: '03', title: 'Direction', description: 'We outline how FM Consulting can help you reach your goals, and what it costs.' },
+          ].map((item) => (
+            <li key={item.step} className="border-t border-fm-ink pt-5">
+              <span className="fm-meta text-fm-graphite" aria-hidden="true">{item.step}</span>
+              <h3 className="fm-display-3 mt-8 text-fm-ink">{item.title}</h3>
+              <p className="fm-body mt-4 text-fm-graphite">{item.description}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
     </div>
   );
 }

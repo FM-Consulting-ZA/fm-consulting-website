@@ -11,13 +11,15 @@ import { ArrowUpRight, Check, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AnimatedButton } from '@/components/AnimatedButton';
 import { Reveal } from '@/components/motion/Reveal';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { Section } from '@/components/layout/Section';
 import { pricingConfig, type CellValue, type PricingPlan } from '@/data/pricing';
 
 /*
  * Pricing page modelled on the Shopify plan comparison pattern:
  * four plan cards sit directly above a comparison table that shares their
  * column grid. As the cards scroll up under the navigation they fade out and
- * a condensed header (plan, price, action) slides in and pins to the top of
+ * a condensed header (plan, term, action) slides in and pins to the top of
  * the table until the table ends. Scroll-linked, so it tracks the wheel 1:1.
  */
 
@@ -132,12 +134,11 @@ function PlanCard({ plan, className }: { plan: PricingPlan; className?: string }
       <p className="mt-2 text-sm leading-relaxed text-fm-graphite lg:min-h-[2.75rem]">{plan.tagline}</p>
 
       <div className="mt-6 lg:mt-8">
-        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fm-graphite">{plan.pricePrefix}</span>
-        <div className="mt-1 flex items-baseline gap-2 flex-wrap">
-          <span className="font-mono text-[2rem] leading-none tracking-tight text-fm-ink">{plan.price}</span>
-          <span className="text-sm text-fm-graphite">{plan.priceSuffix}</span>
+        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fm-graphite">{plan.basis}</span>
+        <div className="mt-1">
+          <span className="font-mono text-[2rem] leading-none tracking-tight text-fm-ink">{plan.lead}</span>
         </div>
-        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-fm-graphite">{plan.priceNote}</p>
+        <p className="mt-3 text-sm text-fm-graphite">{plan.note}</p>
       </div>
 
       <div className="mt-auto pt-6 lg:pt-8">
@@ -184,7 +185,7 @@ function DesktopCompare() {
       {/* Plan cards: same grid as the table below */}
       <div ref={cardsRef} className={GRID}>
         <div className="pr-8 pb-8 flex flex-col justify-end">
-          <h2 className="text-3xl font-semibold tracking-tight text-fm-ink">{compareHeading}</h2>
+          <h2 className="fm-display-3 text-fm-ink">{compareHeading}</h2>
           <p className="mt-3 text-sm leading-relaxed text-fm-graphite max-w-[16rem]">{compareIntro}</p>
         </div>
         {plans.map((plan, i) => (
@@ -225,7 +226,7 @@ function DesktopCompare() {
                     <span className="hidden xl:inline">{plan.name}</span>
                   </p>
                   <p className="mt-1 font-mono text-[12px] text-fm-graphite whitespace-nowrap">
-                    {plan.price} <span className="hidden xl:inline text-fm-graphite/80">{plan.priceSuffix}</span>
+                    {plan.lead}
                   </p>
                 </div>
                 <Link
@@ -350,7 +351,7 @@ function MobileCompare() {
       </div>
 
       <div className="mt-20">
-        <h2 className="text-3xl font-semibold tracking-tight text-fm-ink">{compareHeading}</h2>
+        <h2 className="fm-display-3 text-fm-ink">{compareHeading}</h2>
         <p className="mt-3 text-sm leading-relaxed text-fm-graphite">{compareIntro}</p>
       </div>
 
@@ -376,7 +377,7 @@ function MobileCompare() {
           </div>
           <div className="flex items-center justify-between gap-4 py-3">
             <p className="font-mono text-[12px] text-fm-graphite">
-              {plan.pricePrefix} <span className="text-fm-ink">{plan.price}</span> {plan.priceSuffix}
+              <span className="text-fm-ink">{plan.lead}</span> · {plan.basis.toLowerCase()}
             </p>
             <Link
               to={contactHref(plan)}
@@ -429,24 +430,10 @@ export function PricingPage() {
   const { label, heading, intro, footnotes } = pricingConfig;
 
   return (
-    <div className="w-full pt-24 lg:pt-32 bg-white">
-      <section className="w-full pb-16 lg:pb-20">
-        <div className="container-large px-6 lg:px-12">
-          <Reveal y={16}>
-            <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">{label}</span>
-          </Reveal>
-          <Reveal delay={0.08} y={20}>
-            <h1 className="mt-6 max-w-4xl text-4xl lg:text-6xl font-semibold leading-tight tracking-tight text-fm-ink">
-              {heading}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.16} y={20}>
-            <p className="mt-6 max-w-2xl text-lg lg:text-xl leading-relaxed text-fm-graphite">{intro}</p>
-          </Reveal>
-        </div>
-      </section>
+    <div className="w-full">
+      <PageHeader label={label} title={heading} intro={intro} />
 
-      <section className="w-full pb-24 lg:pb-32">
+      <section className="w-full bg-white pt-16 lg:pt-24 pb-24 lg:pb-32">
         <div className="container-large px-6 lg:px-12">
           <DesktopCompare />
           <MobileCompare />
@@ -462,20 +449,23 @@ export function PricingPage() {
         </div>
       </section>
 
-      <section className="w-full bg-fm-ink text-white">
-        <div className="container-large px-6 lg:px-12 py-20 lg:py-28 flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl lg:text-5xl font-semibold tracking-tight leading-tight">Not sure which fits?</h2>
-            <p className="mt-4 text-lg leading-relaxed text-white/70">
-              Book a 30-minute call. We will look at where growth is stuck and tell you which engagement makes sense,
-              including when none of them do.
-            </p>
-          </div>
-          <AnimatedButton to="/contact" variant="outline-white" size="lg" showIcon>
-            Book a call
-          </AnimatedButton>
-        </div>
-      </section>
+      <Section
+        tone="ink"
+        compact
+        label="Not sure?"
+        heading="Not sure which fits?"
+        intro={
+          <p>
+            Book a 30-minute call. We will look at where growth is stuck and tell you which engagement makes sense,
+            including when none of them do.
+          </p>
+        }
+        className="pb-0 lg:pb-0"
+      >
+        <AnimatedButton to="/contact" variant="secondary" size="lg" className="border-fm-paper">
+          Book a call
+        </AnimatedButton>
+      </Section>
     </div>
   );
 }

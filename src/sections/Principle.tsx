@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { viewConfig } from '@/config';
 import { Section } from '@/components/layout/Section';
+import { BrandFilm } from '@/components/BrandFilm';
+import { findTheLeakFilm } from '@/data/films';
 
-/** The point of view the whole practice is built on, stated once. */
+/** The point of view the whole practice is built on, stated once, then shown. */
 export function Principle() {
   if (!viewConfig.heading) return null;
 
@@ -14,6 +16,7 @@ export function Principle() {
       >
         {viewConfig.linkLabel}
       </Link>
+      <BrandFilm {...findTheLeakFilm} placement="home" className="mt-14 lg:mt-20" />
     </Section>
   );
 }

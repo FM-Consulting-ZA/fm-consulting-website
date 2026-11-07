@@ -17,7 +17,7 @@ const sections: LegalSection[] = [
           to them in the Protection of Personal Information Act, 2013 (“POPIA”).
         </P>
         <P>
-          This policy covers the Site, the enquiries it receives and our newsletter. Personal information we process
+          This policy covers the Site, the enquiries it receives, the Growth Playbook leak report and our newsletter. Personal information we process
           for clients during a consulting engagement is governed by our agreement with that client.
         </P>
       </>
@@ -34,6 +34,11 @@ const sections: LegalSection[] = [
             <>
               <strong>Contact form.</strong> Your name, company, email address, phone number (optional), the service
               you’re interested in, an indicative budget (optional) and your message.
+            </>,
+            <>
+              <strong>Growth Playbook leak report.</strong> The figures you enter in the Growth Playbook stay in your
+              browser. If you ask for the leak report, we receive your name, email address, business name (optional),
+              those figures, the result, and a record of your consent: the date, time and the wording you agreed to.
             </>,
             <>
               <strong>Newsletter.</strong> Your email address, and a record of your consent: the date, time and the
@@ -76,6 +81,10 @@ const sections: LegalSection[] = [
               <strong>Responding to your enquiry</strong> — replying, scheduling a consultation and preparing a
               proposal. Basis: steps you have asked us to take before a possible contract, and our legitimate interest
               in responding to business enquiries.
+            </>,
+            <>
+              <strong>Sending your leak report and discussing it with you</strong> — only if you asked for it. Basis:
+              your consent. We won’t add you to our newsletter unless you ticked the separate newsletter box.
             </>,
             <>
               <strong>Sending our insights newsletter</strong> — only if you subscribed. Basis: your consent. Every
@@ -128,8 +137,8 @@ const sections: LegalSection[] = [
               <strong>Vercel</strong> — hosts the Site and processes server logs, including IP addresses.
             </>,
             <>
-              <strong>Web3Forms</strong> — receives contact form and newsletter submissions and forwards them to our
-              inbox.
+              <strong>Web3Forms</strong> — receives contact form, leak report and newsletter submissions and forwards
+              them to our inbox.
             </>,
             <>
               <strong>Microsoft</strong> — our email service, where enquiries are received and answered, and
@@ -234,6 +243,10 @@ const sections: LegalSection[] = [
           <>
             <strong>Client correspondence</strong> — for the engagement and afterwards for as long as tax and company
             law require us to keep records, typically five to seven years.
+          </>,
+          <>
+            <strong>Leak report requests</strong> — treated like enquiries: up to 24 months after our last contact,
+            then deleted.
           </>,
           <>
             <strong>Newsletter</strong> — until you unsubscribe. We keep a record of your consent and of your opt-out
@@ -377,6 +390,7 @@ export function PrivacyPage() {
   return (
     <LegalLayout
       docNumber="02"
+      updated={{ label: '4 November 2026', iso: '2026-11-04' }}
       title="Privacy Policy"
       lede={
         <>

@@ -1,7 +1,8 @@
 // Pricing page content. Every plan, price and comparison row lives here so the
 // page component never needs editing to change an offer.
 //
-// Prices are "from" figures; final fees are confirmed in a written scope.
+// No fees are published: each plan shows its format and term, and fees are
+// scoped per business and confirmed in a written proposal.
 // Approved by Fouad, 30 October 2026.
 
 export type CellValue = boolean | string;
@@ -11,10 +12,9 @@ export interface PricingPlan {
   name: string;
   shortName: string; // used where columns are narrow (laptops, mobile tabs)
   tagline: string;
-  pricePrefix: string; // e.g. "From"
-  price: string; // formatted ZAR, e.g. "R18,500"
-  priceSuffix: string; // e.g. "once-off", "/ month"
-  priceNote: string;
+  lead: string; // the headline commitment, e.g. "2 weeks", "Monthly"
+  basis: string; // how it is charged, e.g. "Fixed fee", "Retainer"
+  note: string;
   ctaLabel: string;
   featured?: boolean;
   badge?: string;
@@ -43,11 +43,11 @@ export interface PricingConfig {
 }
 
 export const pricingConfig: PricingConfig = {
-  label: 'Pricing',
-  heading: 'Senior strategy, priced in the open.',
+  label: 'Engagements',
+  heading: 'Four ways to work with us.',
   intro:
-    'Four ways to work with FM Consulting. Every engagement is led by a senior strategist from the first call to the last report. No juniors, no agency overhead, no surprise line items.',
-  compareHeading: 'Compare plans',
+    'Every engagement is led by a senior strategist from the first call to the last report. Fees are scoped to your business and confirmed in writing before any work starts.',
+  compareHeading: 'Compare engagements',
   compareIntro: 'What each engagement includes, line by line.',
   plans: [
     {
@@ -55,10 +55,9 @@ export const pricingConfig: PricingConfig = {
       name: 'Growth Diagnostic',
       shortName: 'Diagnostic',
       tagline: 'Find out what is holding growth back.',
-      pricePrefix: 'From',
-      price: 'R18,500',
-      priceSuffix: 'once-off',
-      priceNote: 'Two weeks, fixed fee',
+      lead: '2 weeks',
+      basis: 'Fixed fee',
+      note: 'Ends with a 90-day roadmap',
       ctaLabel: 'Book diagnostic',
     },
     {
@@ -66,10 +65,9 @@ export const pricingConfig: PricingConfig = {
       name: 'Growth Sprint',
       shortName: 'Sprint',
       tagline: 'Fix the biggest leak, then build the plan.',
-      pricePrefix: 'From',
-      price: 'R48,000',
-      priceSuffix: 'per sprint',
-      priceNote: 'Six weeks, fixed scope',
+      lead: '6 weeks',
+      basis: 'Fixed scope',
+      note: 'One leak fixed, one plan built',
       ctaLabel: 'Start a sprint',
     },
     {
@@ -77,10 +75,9 @@ export const pricingConfig: PricingConfig = {
       name: 'Growth Partner',
       shortName: 'Partner',
       tagline: 'Ongoing strategy and performance oversight.',
-      pricePrefix: 'From',
-      price: 'R28,000',
-      priceSuffix: '/ month',
-      priceNote: 'Three-month minimum',
+      lead: 'Monthly',
+      basis: 'Retainer',
+      note: 'Three-month minimum',
       ctaLabel: 'Partner with us',
       featured: true,
       badge: 'Recommended',
@@ -90,10 +87,9 @@ export const pricingConfig: PricingConfig = {
       name: 'Fractional CMO',
       shortName: 'Fractional',
       tagline: 'Senior marketing leadership, embedded.',
-      pricePrefix: 'From',
-      price: 'R55,000',
-      priceSuffix: '/ month',
-      priceNote: 'Six-month minimum',
+      lead: 'Monthly',
+      basis: 'Retainer',
+      note: 'Six-month minimum',
       ctaLabel: 'Discuss scope',
     },
   ],
@@ -156,7 +152,7 @@ export const pricingConfig: PricingConfig = {
     },
   ],
   footnotes: [
-    'All prices in South African rand. Final fees are confirmed in a written scope before work starts.',
+    'Fees depend on the size of the business and the scope agreed. You receive a written proposal with a fixed fee or monthly retainer before work starts.',
     'Media spend, software licences and production costs are billed at cost and are not included.',
     'Retainers continue month to month after the minimum term, with 30 days’ notice to end.',
   ],

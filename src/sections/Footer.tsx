@@ -17,7 +17,9 @@ export function Footer() {
   return (
     <footer className="w-full bg-fm-ink text-fm-paper">
       <div className="container-large px-6 lg:px-12 pt-20 lg:pt-28 pb-10">
-        <div className="grid grid-cols-12 gap-x-6 gap-y-12 border-t border-fm-paper/25 pt-10 lg:pt-12">
+        {/* Logo above the tagline on the left; contact details on the tagline's
+            line on the right. The block sits directly above the legal rule. */}
+        <div className="grid grid-cols-12 gap-x-6 gap-y-8 border-t border-fm-paper/25 pt-16 lg:pt-24 lg:items-end lg:[align-items:last_baseline]">
           <div className="col-span-12 lg:col-span-3">
             <Link
               to="/"
@@ -26,35 +28,32 @@ export function Footer() {
             >
               <BrandLogo variant="lockup" reverse className="h-9 text-fm-paper" />
             </Link>
-            <p className="fm-meta mt-6 text-fm-paper/55">{footerConfig.tagline}</p>
+            <p className="fm-meta mt-6 text-fm-paper/55 lg:whitespace-nowrap lg:!tracking-[0.06em] xl:!tracking-[0.16em]">{footerConfig.tagline}</p>
           </div>
 
-          <div className="col-span-12 lg:col-span-9">
-
-            <ul className="flex flex-wrap gap-x-8 gap-y-3 fm-body lg:pt-2">
-              <li>
-                <a href={`mailto:${contactConfig.contactInfo.email}`} className={linkQuiet}>
-                  {contactConfig.contactInfo.email}
+          <ul className="col-span-12 lg:col-span-9 flex flex-wrap gap-x-8 lg:gap-x-6 xl:gap-x-8 gap-y-3 text-[0.95rem] lg:text-sm xl:text-[0.95rem] leading-snug">
+            <li>
+              <a href={`mailto:${contactConfig.contactInfo.email}`} className={linkQuiet}>
+                {contactConfig.contactInfo.email}
+              </a>
+            </li>
+            <li>
+              <a href={phoneHref} className={linkQuiet}>
+                {contactConfig.contactInfo.phone}
+              </a>
+            </li>
+            {socials.map((social) => (
+              <li key={social.label}>
+                <a href={social.href} target="_blank" rel="noopener noreferrer" className={linkQuiet}>
+                  {social.label}
                 </a>
               </li>
-              <li>
-                <a href={phoneHref} className={linkQuiet}>
-                  {contactConfig.contactInfo.phone}
-                </a>
-              </li>
-              {socials.map((social) => (
-                <li key={social.label}>
-                  <a href={social.href} target="_blank" rel="noopener noreferrer" className={linkQuiet}>
-                    {social.label}
-                  </a>
-                </li>
-              ))}
-              <li className="text-fm-paper/45">{contactConfig.contactInfo.address}</li>
-            </ul>
-          </div>
+            ))}
+            <li className="text-fm-paper/45">{contactConfig.contactInfo.address}</li>
+          </ul>
         </div>
 
-        <div className="mt-16 lg:mt-24 pt-6 border-t border-fm-paper/15 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="mt-8 lg:mt-10 pt-6 border-t border-fm-paper/15 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <p className="text-sm text-fm-paper/45">
             {footerConfig.copyright}
             <span className="block sm:inline sm:ml-3">Reg. {legalEntity.registrationNumber}</span>

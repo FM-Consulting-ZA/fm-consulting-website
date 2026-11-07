@@ -20,6 +20,8 @@ export interface LegalSection {
 interface LegalLayoutProps {
   /** Position in the legal set, e.g. "01". */
   docNumber: string;
+  /** Overrides the shared "Last updated" date when only this document changed. */
+  updated?: { label: string; iso: string };
   title: string;
   lede: ReactNode;
   sections: LegalSection[];
@@ -102,7 +104,7 @@ function IndexList({ sections, active, onNavigate }: { sections: LegalSection[];
   );
 }
 
-export function LegalLayout({ docNumber, title, lede, sections, alsoSee }: LegalLayoutProps) {
+export function LegalLayout({ docNumber, title, lede, sections, alsoSee, updated }: LegalLayoutProps) {
   const ids = sections.map((s) => s.id);
   const active = useActiveSection(ids);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -148,7 +150,7 @@ export function LegalLayout({ docNumber, title, lede, sections, alsoSee }: Legal
                 </span>
                 <span className="legal-meta-dot" aria-hidden="true">·</span>
                 <span>
-                  Last updated <time dateTime={legalDates.updatedIso}>{legalDates.updated}</time>
+                  Last updated <time dateTime={updated?.iso ?? legalDates.updatedIso}>{updated?.label ?? legalDates.updated}</time>
                 </span>
               </p>
             </div>

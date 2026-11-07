@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
-import { servicesConfig } from '@/config';
-import { ArrowRight, TrendingUp, Target, Users, RefreshCw, BarChart3, Settings } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { Section } from '@/components/layout/Section';
+import { CTA } from '@/sections/CTA';
 
 const serviceDetails = [
   {
-    icon: TrendingUp,
     title: "Growth Strategy",
     overview: "We help you define and execute a clear path to sustainable business growth.",
     problems: [
@@ -27,11 +25,9 @@ const serviceDetails = [
       "Channel strategy development",
       "Customer journey mapping",
       "Growth roadmap creation"
-    ],
-    image: "/images/service-1.jpg"
+    ]
   },
   {
-    icon: Target,
     title: "Digital Marketing Strategy",
     overview: "Strategic planning and execution for digital channels that drive measurable results.",
     problems: [
@@ -52,11 +48,9 @@ const serviceDetails = [
       "Campaign architecture design",
       "Audience strategy and segmentation",
       "Budget efficiency planning"
-    ],
-    image: "/images/service-2.jpg"
+    ]
   },
   {
-    icon: Users,
     title: "Customer Acquisition",
     overview: "Build systems that consistently attract and convert high-quality customers.",
     problems: [
@@ -77,11 +71,9 @@ const serviceDetails = [
       "Landing page and CRO",
       "Campaign performance management",
       "Acquisition efficiency analysis"
-    ],
-    image: "/images/service-3.jpg"
+    ]
   },
   {
-    icon: RefreshCw,
     title: "Customer Lifecycle & Retention",
     overview: "Maximise customer lifetime value through strategic retention and loyalty programmes.",
     problems: [
@@ -102,11 +94,9 @@ const serviceDetails = [
       "Lifecycle marketing automation",
       "Customer journey optimisation",
       "Loyalty programme design"
-    ],
-    image: "/images/service-4.jpg"
+    ]
   },
   {
-    icon: BarChart3,
     title: "Analytics & Reporting",
     overview: "Turn data into actionable insights with comprehensive measurement frameworks.",
     problems: [
@@ -127,11 +117,9 @@ const serviceDetails = [
       "Campaign measurement and attribution",
       "Data interpretation and insights",
       "Decision-enabling reporting"
-    ],
-    image: "/images/service-5.jpg"
+    ]
   },
   {
-    icon: Settings,
     title: "Business Performance Consulting",
     overview: "Identify and remove bottlenecks to improve overall business performance.",
     problems: [
@@ -152,204 +140,77 @@ const serviceDetails = [
       "Digital transformation roadmap",
       "Operational alignment consulting",
       "Growth bottleneck identification"
-    ],
-    image: "/images/service-6.jpg"
+    ]
   }
 ];
 
+const columns = [
+  { key: 'problems', title: 'Problems we solve' },
+  { key: 'outcomes', title: 'Outcomes we deliver' },
+  { key: 'features', title: "What's included" },
+] as const;
+
 export function ServicesPage() {
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { containerRef: servicesRef, visibleItems } = useStaggerAnimation(serviceDetails.length, 100);
+  const total = String(serviceDetails.length).padStart(2, '0');
 
   return (
-    <div className="w-full pt-24 lg:pt-32">
-      {/* Header Section */}
-      <section className="w-full pb-16 lg:pb-24 bg-white">
-        <div className="container-large px-6 lg:px-12">
-          <div ref={headerRef} className="max-w-4xl">
-            <div
-              className={cn(
-                'transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              )}
-            >
-              <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-                Our Services
-              </span>
-            </div>
-            <h1
-              className={cn(
-                'text-4xl lg:text-6xl font-semibold text-exvia-black mt-6 leading-tight transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '100ms' }}
-            >
-              Strategic Solutions for Commercial Growth
-            </h1>
-            <p
-              className={cn(
-                'text-xl lg:text-2xl text-exvia-black/70 mt-6 leading-relaxed transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '200ms' }}
-            >
-              We offer a comprehensive suite of consulting services designed to help you 
-              acquire more customers, retain them longer, and operate more efficiently.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Overview */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-subtle/30">
-        <div className="container-large px-6 lg:px-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {servicesConfig.services.map((service, index) => (
-              <div
-                key={service.title}
-                className="p-6 bg-white border border-exvia-border rounded-lg hover:border-exvia-black/30 transition-colors group"
-              >
-                <div className="w-10 h-10 flex items-center justify-center border border-exvia-border rounded-lg bg-exvia-subtle/30 mb-4 group-hover:bg-exvia-black group-hover:border-exvia-black transition-colors">
-                  <span className="text-sm font-geist-mono text-exvia-black group-hover:text-white transition-colors">0{index + 1}</span>
-                </div>
-                <h3 className="text-lg font-semibold text-exvia-black mb-2">{service.title}</h3>
-                <p className="text-sm text-exvia-black/60">{service.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Detailed Services */}
-      <section className="w-full py-16 lg:py-24 bg-white">
-        <div className="container-large px-6 lg:px-12">
-          <div ref={servicesRef} className="space-y-24">
+    <div className="w-full">
+      <PageHeader
+        label="Services"
+        title="Six disciplines, one growth system."
+        intro="Consulting that helps you acquire more customers, keep them longer and run the business more efficiently. Each service can be bought on its own; they work best together."
+      >
+        <nav aria-label="Services on this page" className="mt-12 lg:mt-16 border-t border-fm-ink">
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6">
             {serviceDetails.map((service, index) => (
-              <div
-                key={service.title}
-                className={cn(
-                  'grid lg:grid-cols-2 gap-12 lg:gap-16 items-start transition-all duration-800 ease-out-quart',
-                  visibleItems[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                )}
-              >
-                {/* Content */}
-                <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 flex items-center justify-center border border-exvia-border rounded-lg bg-exvia-subtle/30">
-                      <service.icon className="w-5 h-5 text-exvia-black" />
-                    </div>
-                    <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-                      Service 0{index + 1}
-                    </span>
-                  </div>
-                  
-                  <h2 className="text-2xl lg:text-3xl font-semibold text-exvia-black mb-4">
-                    {service.title}
-                  </h2>
-                  
-                  <p className="text-exvia-black/70 text-lg mb-8">
-                    {service.overview}
-                  </p>
+              <li key={service.title} className="border-b border-fm-silver">
+                <a
+                  href={`#service-${index + 1}`}
+                  className="flex items-baseline gap-4 py-4 text-fm-ink hover:text-fm-graphite transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fm-ink"
+                >
+                  <span className="fm-meta text-fm-graphite">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="text-base">{service.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </PageHeader>
 
-                  <div className="space-y-6">
-                    <div>
-                      <h4 className="text-sm font-semibold text-exvia-black uppercase tracking-wider mb-3">
-                        Problems We Solve
-                      </h4>
-                      <ul className="space-y-2">
-                        {service.problems.map((problem, i) => (
-                          <li key={i} className="flex items-start gap-3 text-exvia-black/70">
-                            <span className="w-1.5 h-1.5 bg-exvia-black/40 rounded-full mt-2 flex-shrink-0" />
-                            {problem}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-semibold text-exvia-black uppercase tracking-wider mb-3">
-                        Outcomes We Deliver
-                      </h4>
-                      <ul className="space-y-2">
-                        {service.outcomes.map((outcome, i) => (
-                          <li key={i} className="flex items-start gap-3 text-exvia-black/70">
-                            <span className="w-1.5 h-1.5 bg-exvia-black rounded-full mt-2 flex-shrink-0" />
-                            {outcome}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-semibold text-exvia-black uppercase tracking-wider mb-3">
-                        What's Included
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {service.features.map((feature, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1.5 bg-exvia-subtle/50 text-exvia-black/70 text-sm rounded-full"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-2 mt-8 text-exvia-black font-medium hover:gap-3 transition-all"
-                  >
-                    Discuss Your Needs
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-
-                {/* Image */}
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="grade-img w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
+      {serviceDetails.map((service, index) => (
+        <Section
+          key={service.title}
+          id={`service-${index + 1}`}
+          tone={index % 2 === 0 ? 'white' : 'paper'}
+          label={`${String(index + 1).padStart(2, '0')} / ${total}`}
+          heading={service.title}
+          intro={<p>{service.overview}</p>}
+          className="scroll-mt-20"
+        >
+          <div className="grid md:grid-cols-3 gap-x-6 gap-y-10">
+            {columns.map((col) => (
+              <div key={col.key}>
+                <h3 className="fm-meta text-fm-graphite">{col.title}</h3>
+                <ul className="mt-4 border-t border-fm-ink">
+                  {service[col.key].map((item) => (
+                    <li key={item} className="py-3 border-b border-fm-silver fm-body text-fm-ink">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+          <Link
+            to="/contact"
+            className="fm-link inline-block mt-10 text-base text-fm-ink decoration-fm-silver hover:decoration-fm-ink"
+          >
+            Discuss {service.title.toLowerCase()}
+          </Link>
+        </Section>
+      ))}
 
-      {/* CTA Section */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-black text-white">
-        <div className="container-large px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-semibold">
-              Not Sure Which Service You Need?
-            </h2>
-            <p className="text-white/70 mt-4 text-lg">
-              Book a free consultation. We'll help you identify the biggest opportunities 
-              for growth in your business.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-exvia-black font-medium rounded-lg hover:bg-white/90 transition-colors"
-              >
-                Book a Free Consultation
-              </Link>
-              <Link
-                to="/industries"
-                className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
-              >
-                Explore by Industry
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTA />
     </div>
   );
 }

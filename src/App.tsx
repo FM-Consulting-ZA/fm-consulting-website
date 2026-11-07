@@ -24,6 +24,7 @@ import { InsightsPage } from '@/pages/InsightsPage';
 import { ArticlePage } from '@/pages/ArticlePage';
 import { ContactPage } from '@/pages/ContactPage';
 import { PricingPage } from '@/pages/PricingPage';
+import { PlaybookPage } from '@/pages/PlaybookPage';
 import { WorkPage } from '@/pages/WorkPage';
 import { TermsPage } from '@/pages/legal/TermsPage';
 import { PrivacyPage } from '@/pages/legal/PrivacyPage';
@@ -44,10 +45,11 @@ function AnimatedRoutes() {
         <Route path="/services" element={<PageTransition><Seo title="Services" description="Growth strategy, digital marketing, customer acquisition, lifecycle & retention, analytics, and business performance consulting." path="/services" /><ServicesPage /></PageTransition>} />
         <Route path="/industries" element={<PageTransition><Seo title="Industries" description="Tailored growth strategies for hospitality, retail & e-commerce, professional services, B2B technology, SMEs, and consumer services." path="/industries" /><IndustriesPage /></PageTransition>} />
         <Route path="/why-fm" element={<PageTransition><Seo title="Why FM Consulting" description="Strategy without fluff. Performance with accountability. Commercially grounded thinking with practical execution." path="/why-fm" /><WhyFMPage /></PageTransition>} />
-        <Route path="/pricing" element={<PageTransition><Seo title="Pricing" description="Four ways to work with FM Consulting, from a two-week growth diagnostic to a fractional CMO. Senior-led, priced in rand, compared line by line." path="/pricing" /><PricingPage /></PageTransition>} />
+        <Route path="/pricing" element={<PageTransition><Seo title="Engagements" description="Four ways to work with FM Consulting, from a two-week growth diagnostic to a fractional CMO. Senior-led, scoped in writing, compared line by line." path="/pricing" /><PricingPage /></PageTransition>} />
         {workEnabled && (
           <Route path="/work/:slug?" element={<PageTransition><WorkPage /></PageTransition>} />
         )}
+        <Route path="/playbooks" element={<PageTransition><Seo title="Growth Playbook" description="Enter six numbers from last month and see where customers drop out, roughly what it costs in rand, and the playbook FM Consulting would follow to fix it." path="/playbooks" /><PlaybookPage /></PageTransition>} />
         <Route path="/insights" element={<PageTransition><Seo title="Insights" description="Practical insights on growth strategy, performance marketing, and business optimisation." path="/insights" /><InsightsPage /></PageTransition>} />
         <Route path="/insights/:slug" element={<PageTransition><ArticlePage /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><Seo title="Contact" description="Book a consultation with FM Consulting. We respond within 24 hours." path="/contact" /><ContactPage /></PageTransition>} />

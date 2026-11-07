@@ -1,254 +1,95 @@
-import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
-import { whyFMConfig, testimonialsConfig } from '@/config';
-import { TrendingUp, Target, BarChart3, Award, Layers, Settings, Check, Star } from 'lucide-react';
+import { whyFMConfig } from '@/config';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { Section } from '@/components/layout/Section';
+import { CTA } from '@/sections/CTA';
 
-const iconMap: Record<string, React.ElementType> = {
-  "TrendingUp": TrendingUp,
-  "Target": Target,
-  "BarChart3": BarChart3,
-  "Award": Award,
-  "Layers": Layers,
-  "Settings": Settings,
+// Client testimonials are not shown until real, attributable quotes exist
+// (same rule as the home page).
+
+const comparison = [
+  { aspect: 'Strategic depth', agency: 'Limited', consultancy: 'Extensive', fm: 'Deep and practical' },
+  { aspect: 'Execution support', agency: 'Yes', consultancy: 'Minimal', fm: 'Full support' },
+  { aspect: 'Commercial focus', agency: 'Activity-based', consultancy: 'Theory-heavy', fm: 'Outcome-driven' },
+  { aspect: 'Data and analytics', agency: 'Basic reporting', consultancy: 'Complex models', fm: 'Actionable insight' },
+  { aspect: 'Pricing model', agency: 'Retainer plus % of spend', consultancy: 'Day rates', fm: 'Fixed fee or retainer, scoped in writing' },
+  { aspect: 'Accessibility', agency: 'High', consultancy: 'Low', fm: 'Premium but accessible' },
+];
+
+const asSentence = (text: string) => {
+  const flat = text.replace(/\s*\n\s*/g, ' ').trim();
+  return flat.charAt(0) + flat.slice(1).toLowerCase();
 };
 
 export function WhyFMPage() {
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { containerRef: diffRef, visibleItems: diffVisible } = useStaggerAnimation(whyFMConfig.differentiators.length, 100);
-  const { containerRef: statsRef, visibleItems: statsVisible } = useStaggerAnimation(whyFMConfig.stats.length, 100);
-
   return (
-    <div className="w-full pt-24 lg:pt-32">
-      {/* Header Section */}
-      <section className="w-full pb-16 lg:pb-24 bg-white">
-        <div className="container-large px-6 lg:px-12">
-          <div ref={headerRef} className="max-w-4xl">
-            <div
-              className={cn(
-                'transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              )}
-            >
-              <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-                Why FM Consulting
-              </span>
-            </div>
-            <h1
-              className={cn(
-                'text-4xl lg:text-6xl font-semibold text-exvia-black mt-6 leading-tight transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '100ms' }}
-            >
-              Strategy Without Fluff.<br />
-              Performance With Accountability.
-            </h1>
-            <p
-              className={cn(
-                'text-xl lg:text-2xl text-exvia-black/70 mt-6 leading-relaxed transition-all duration-800 ease-out-quart',
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              )}
-              style={{ transitionDelay: '200ms' }}
-            >
-              Businesses choose FM Consulting because we combine strategic thinking with 
-              commercial discipline. We don't just recommend—we help you execute, measure, and optimise.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="w-full">
+      <PageHeader
+        label="Why FM Consulting"
+        title="Strategy without fluff. Performance with accountability."
+        intro={whyFMConfig.description}
+      />
 
-      {/* Differentiators Grid */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-subtle/30">
-        <div className="container-large px-6 lg:px-12">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-              Our Difference
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-exvia-black mt-4">
-              Why Businesses Choose Us
-            </h2>
-          </div>
+      <Section tone="white" label="Difference" heading="Why businesses choose us.">
+        <ul className="grid md:grid-cols-2 gap-x-6 gap-y-12">
+          {whyFMConfig.differentiators.map((d) => (
+            <li key={d.title} className="border-t border-fm-ink pt-6">
+              <h3 className="fm-display-3 text-fm-ink">{asSentence(d.title)}</h3>
+              <p className="fm-body mt-4 text-fm-graphite max-w-[28rem]">{d.description}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-          <div ref={diffRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyFMConfig.differentiators.map((diff, index) => {
-              const Icon = iconMap[diff.iconName] || Target;
-              return (
-                <div
-                  key={diff.title}
-                  className={cn(
-                    'p-8 bg-white border border-exvia-border rounded-lg hover:border-exvia-black/30 hover:shadow-lg transition-all duration-700 ease-out-quart',
-                    diffVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  )}
-                >
-                  <div className="w-12 h-12 flex items-center justify-center border border-exvia-border rounded-lg bg-exvia-subtle/30 mb-6">
-                    <Icon className="w-5 h-5 text-exvia-black" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-exvia-black mb-3">{diff.title}</h3>
-                  <p className="text-exvia-black/60 leading-relaxed">{diff.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-black text-white">
-        <div className="container-large px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-xs font-geist-mono uppercase tracking-widest text-white/50">
-                Results That Matter
-              </span>
-              <h2 className="text-3xl lg:text-4xl font-semibold mt-4">
-                We Measure Success by Your Success
-              </h2>
-              <p className="text-white/70 mt-6 leading-relaxed">
-                Every engagement is designed to deliver measurable commercial outcomes. 
-                Here are the results we've achieved for our clients on average.
-              </p>
-            </div>
-
-            <div ref={statsRef} className="grid grid-cols-3 gap-6">
-              {whyFMConfig.stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    'text-center p-6 border border-white/10 rounded-lg transition-all duration-700 ease-out-quart',
-                    statsVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  )}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  <span className="block text-4xl lg:text-5xl font-bold text-white">{stat.value}</span>
-                  <span className="text-sm text-white/60 mt-2 block">{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How We Compare */}
-      <section className="w-full py-16 lg:py-24 bg-white">
-        <div className="container-large px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-              The FM Difference
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-exvia-black mt-4">
-              How We Compare
-            </h2>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-exvia-black">
-                  <th className="text-left py-4 px-4 font-semibold text-exvia-black">Aspect</th>
-                  <th className="text-center py-4 px-4 font-semibold text-exvia-black bg-exvia-subtle/30">Traditional Agencies</th>
-                  <th className="text-center py-4 px-4 font-semibold text-exvia-black bg-exvia-subtle/30">Big Consultancies</th>
-                  <th className="text-center py-4 px-4 font-semibold text-white bg-exvia-black">FM Consulting</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { aspect: "Strategic Depth", agency: "Limited", consultancy: "Extensive", fm: "Deep + Practical" },
-                  { aspect: "Execution Support", agency: "Yes", consultancy: "Minimal", fm: "Full Support" },
-                  { aspect: "Commercial Focus", agency: "Activity-based", consultancy: "Theory-heavy", fm: "Outcome-driven" },
-                  { aspect: "Data & Analytics", agency: "Basic reporting", consultancy: "Complex models", fm: "Actionable insights" },
-                  { aspect: "Pricing Model", agency: "Retainer + % spend", consultancy: "Day rates", fm: "Published from-prices, fixed scope" },
-                  { aspect: "Accessibility", agency: "High", consultancy: "Low", fm: "Premium but accessible" },
-                ].map((row, index) => (
-                  <tr key={index} className="border-b border-exvia-border">
-                    <td className="py-4 px-4 font-medium text-exvia-black">{row.aspect}</td>
-                    <td className="py-4 px-4 text-center text-exvia-black/60">{row.agency}</td>
-                    <td className="py-4 px-4 text-center text-exvia-black/60">{row.consultancy}</td>
-                    <td className="py-4 px-4 text-center text-exvia-black font-medium bg-exvia-subtle/20">
-                      <div className="flex items-center justify-center gap-2">
-                        <Check className="w-4 h-4 text-exvia-black" />
-                        {row.fm}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-subtle/30">
-        <div className="container-large px-6 lg:px-12">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-geist-mono uppercase tracking-widest text-exvia-black/50">
-              Client Feedback
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-exvia-black mt-4">
-              What Our Clients Say
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonialsConfig.testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="p-8 bg-white border border-exvia-border rounded-lg"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-exvia-black text-exvia-black" />
-                  ))}
-                </div>
-                <p className="text-exvia-black/70 mb-6 leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div className="flex items-center gap-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.author}
-                    className="grade-img w-12 h-12 rounded-full object-cover"
-                  />
-                  <div>
-                    <div className="font-semibold text-exvia-black">{testimonial.author}</div>
-                    <div className="text-sm text-exvia-black/60">{testimonial.role}</div>
-                    <div className="text-sm text-exvia-black/60">{testimonial.company}</div>
-                  </div>
-                </div>
+      {whyFMConfig.stats.length > 0 && (
+        <Section
+          tone="paper"
+          label="Commitments"
+          heading="What you can hold us to."
+          intro={<p>Not averages or projections. These are written into every engagement, whatever its size.</p>}
+        >
+          <dl className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10 border-t border-fm-silver pt-8">
+            {whyFMConfig.stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col-reverse justify-end">
+                <dt className="mt-3 text-[0.95rem] leading-snug text-fm-graphite">{asSentence(stat.label)}</dt>
+                <dd className="fm-figure text-fm-ink">{stat.value}</dd>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
+          </dl>
+        </Section>
+      )}
 
-      {/* CTA Section */}
-      <section className="w-full py-16 lg:py-24 bg-exvia-black text-white">
-        <div className="container-large px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-semibold">
-              Ready to Experience the Difference?
-            </h2>
-            <p className="text-white/70 mt-4 text-lg">
-              Book a consultation and see how our approach can help your business grow.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-exvia-black font-medium rounded-lg hover:bg-white/90 transition-colors"
-              >
-                Book a Consultation
-              </Link>
-              <Link
-                to="/services"
-                className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
-              >
-                Explore Our Services
-              </Link>
-            </div>
-          </div>
+      <Section tone="white" label="Comparison" heading="How we compare." wide>
+        <div className="overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0">
+          <table className="w-full min-w-[44rem] table-fixed border-collapse text-left">
+            <colgroup>
+              <col className="w-[25%]" />
+              <col />
+              <col />
+              <col />
+            </colgroup>
+            <thead>
+              <tr className="border-b border-fm-ink">
+                <th scope="col" className="py-4 pr-6 fm-meta text-fm-graphite font-medium">Aspect</th>
+                <th scope="col" className="py-4 pr-6 fm-meta text-fm-graphite font-medium">Traditional agencies</th>
+                <th scope="col" className="py-4 pr-6 fm-meta text-fm-graphite font-medium">Big consultancies</th>
+                <th scope="col" className="py-4 px-5 fm-meta font-medium bg-fm-ink text-fm-paper">FM Consulting</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparison.map((row) => (
+                <tr key={row.aspect} className="border-b border-fm-silver align-top">
+                  <th scope="row" className="py-5 pr-6 font-normal fm-display-3 text-fm-ink !text-[1.15rem]">{row.aspect}</th>
+                  <td className="py-5 pr-6 fm-body text-fm-graphite">{row.agency}</td>
+                  <td className="py-5 pr-6 fm-body text-fm-graphite">{row.consultancy}</td>
+                  <td className="py-5 px-5 fm-body text-fm-ink bg-fm-paper">{row.fm}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </section>
+      </Section>
+
+      <CTA />
     </div>
   );
 }
