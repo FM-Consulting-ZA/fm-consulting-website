@@ -60,34 +60,45 @@ function AnimatedRoutes() {
   );
 }
 
-function App() {
+/**
+ * The app without a router around it, so the same tree can be rendered in the
+ * browser (BrowserRouter, below) and at build time (StaticRouter, in
+ * entry-server.tsx) to pre-render each route to its own HTML file.
+ */
+export function AppShell() {
   const { showOverlay } = usePageLoad(500);
 
   return (
+    <SmoothScroll>
+      <div className="min-h-screen bg-white">
+        {/* Page Load Overlay */}
+        <PageOverlay isVisible={showOverlay} />
+
+        {/* Navigation */}
+        <Navigation />
+
+        {/* Main Content */}
+        <main>
+          <AnimatedRoutes />
+        </main>
+
+        {/* Footer */}
+        <Footer />
+
+        {/* Cookie choice — UK / EEA / CH visitors only */}
+        <ConsentNotice />
+
+        {/* Vercel Web Analytics (cookieless) */}
+        <Analytics />
+      </div>
+    </SmoothScroll>
+  );
+}
+
+function App() {
+  return (
     <Router>
-      <SmoothScroll>
-        <div className="min-h-screen bg-white">
-          {/* Page Load Overlay */}
-          <PageOverlay isVisible={showOverlay} />
-
-          {/* Navigation */}
-          <Navigation />
-
-          {/* Main Content */}
-          <main>
-            <AnimatedRoutes />
-          </main>
-
-          {/* Footer */}
-          <Footer />
-
-          {/* Cookie choice — UK / EEA / CH visitors only */}
-          <ConsentNotice />
-
-          {/* Vercel Web Analytics (cookieless) */}
-          <Analytics />
-        </div>
-      </SmoothScroll>
+      <AppShell />
     </Router>
   );
 }

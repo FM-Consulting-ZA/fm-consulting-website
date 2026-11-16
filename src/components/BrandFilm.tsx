@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
+import { useIsClient } from '@/hooks/useIsClient';
 
 /*
  * The brand film, played the way the rest of the site moves: quietly, and
@@ -29,7 +30,25 @@ interface BrandFilmProps {
 
 type State = 'waiting' | 'playing' | 'paused' | 'ended';
 
-export function BrandFilm({ src, poster, description, title, duration, placement, portrait, className }: BrandFilmProps) {
+/**
+ * Which cut to play (16:9 or 4:5) and whether to autoplay depend on the
+ * visitor's screen and motion setting, which are unknown when the page is
+ * pre-rendered at build time. Until the browser takes over, hold the film's
+ * place with an empty frame; the load overlay covers the swap.
+ */
+export function BrandFilm(props: BrandFilmProps) {
+  const isClient = useIsClient();
+  if (!isClient) {
+    return (
+      <figure className={cn('w-full', props.className)}>
+        <div className="relative w-full overflow-hidden bg-fm-paper aspect-video" />
+      </figure>
+    );
+  }
+  return <BrandFilmPlayer {...props} />;
+}
+
+function BrandFilmPlayer({ src, poster, description, title, duration, placement, portrait, className }: BrandFilmProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [state, setState] = useState<State>('waiting');
   const [muted, setMuted] = useState(true);

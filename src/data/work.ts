@@ -143,9 +143,25 @@ const PRODUCTION_HOSTS = [
   'fouadmaasdorp.me',
 ];
 
-/** True on the live domains; false on Vercel previews and localhost. */
-export const isProductionHost =
-  typeof window !== 'undefined' && PRODUCTION_HOSTS.includes(window.location.hostname);
+/**
+ * True on the live domains; false on Vercel previews and localhost.
+ *
+ * Pages are also pre-rendered at build time, where there is no hostname to
+ * check. There the answer comes from the kind of build: every build counts as
+ * production except a Vercel preview build, so unpublished work can never be
+ * baked into the HTML that the live domains serve.
+ */
+export const isProductionHost = import.meta.env.SSR
+  ? __VERCEL_ENV__ !== 'preview'
+  : PRODUCTION_HOSTS.includes(window.location.hostname);
+
+/**
+ * Whether the pre-rendered HTML was built for this kind of host. It is not on
+ * localhost or when a production build is opened on its vercel.app address,
+ * where drafts show but were left out of the HTML; main.tsx then renders from
+ * scratch rather than attaching to markup that does not match.
+ */
+export const prerenderMatchesHost = isProductionHost === (__VERCEL_ENV__ !== 'preview');
 
 /** Projects this visitor may see: published ones everywhere, drafts only off production. */
 export const visibleWork = workProjects.filter((p) => p.published || !isProductionHost);
